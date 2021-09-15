@@ -7,9 +7,10 @@ const app = express();
 
 const route = require("./routes");
 const port = process.env.PORT || 5000;
-// const db = require('./config/db');
+
 // Connect to DB
-// db.connect();
+// const db = require("./config/db");
+// db.getConnection();
 
 // const corsOptions = {
 //   exposedHeaders: ["x-access-token", "x-refresh-token"],
