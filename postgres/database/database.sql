@@ -8,7 +8,7 @@ CREATE TABLE Users(
   email VARCHAR(32),
   sur_name VARCHAR(32),
   name VARCHAR(32),
-  date_of_birth DATE(),
+  -- date_of_birth DATE(),
   place_of_birth VARCHAR(100),
   gender VARCHAR(10),
   ethenic_type VARCHAR(32),
