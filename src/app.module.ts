@@ -6,7 +6,7 @@ import { UsersModule } from './users/user.module';
 
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TestModule } from './test/test.module';
+import { TestModule } from './demo/test.module';
 
 @Module({
   imports: [
