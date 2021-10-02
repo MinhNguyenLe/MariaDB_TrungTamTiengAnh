@@ -1,14 +1,30 @@
-export interface addUser {
+export interface user {
+  id: number;
   userName: string;
   password: string;
-  phoneNumber: number;
+  phoneNumber: string;
   email: string;
   surName: string;
-  name: string;
-  dateOfBirth: Date;
-  placeOfBirth: string;
+  lastName: string;
+  dateBirth: string;
+  placeBirth: string;
   gender: string;
-  ethenicType: string;
   address: string;
-  roleID: string;
+  roleId: number;
+}
+
+export interface studentClass {
+  user: user;
+  id: number;
+  isPaid: boolean;
+  // classId: [number];
+}
+
+export interface teacher {
+  user: user;
+  id: number;
+  wage: number;
+  subWage: number;
+  workTime: number;
+  classId: [number];
 }
