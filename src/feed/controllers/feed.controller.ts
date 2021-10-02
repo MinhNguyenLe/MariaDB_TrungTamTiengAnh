@@ -12,7 +12,7 @@ export class FeedController {
     return this.feedService.createPost(post);
   }
 
-  @Get()
+  @Get('/test') // success
   findAll() {
     return this.feedService.findAllPosts();
   }
