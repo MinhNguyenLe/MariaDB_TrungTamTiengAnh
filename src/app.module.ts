@@ -6,7 +6,7 @@ import { UsersModule } from './users/user.module';
 
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TestModule } from './demo/test.module';
+import { FeedModule } from './feed/feed.module';
 
 @Module({
   imports: [
@@ -18,13 +18,13 @@ import { TestModule } from './demo/test.module';
       type: `postgres`,
       host: process.env.DB_HOST, // local host (ex : 127.0.0.1)
       port: parseInt(<string>process.env.DB_PORT), // port (default : 5432)
-      username: process.env.DB_USER, // user name for postgres
+      username: process.env.DB_USERNAME, // user name for postgres
       password: process.env.DB_PASS, // pass
-      database: process.env.DC_NAME, // name Database
+      // database: process.env. , // name Database
       autoLoadEntities: true,
       synchronize: true,
     }),
-    TestModule,
+    FeedModule,
   ],
   controllers: [AppController],
   providers: [AppService],
