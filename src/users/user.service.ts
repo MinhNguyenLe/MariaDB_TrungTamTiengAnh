@@ -24,7 +24,11 @@ export class UsersService {
     return account;
   }
 
-  all(): Promise<user[]> {
+  allUser(): Promise<user[]> {
+    return this.usersRepository.find();
+  }
+
+  allStudent(): Promise<user[]> {
     return this.usersRepository.find();
   }
   // async login(): Promise<user> {

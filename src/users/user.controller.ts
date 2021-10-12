@@ -15,8 +15,13 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get()
-  findAll() {
-    return this.usersService.all();
+  findAllUser() {
+    return this.usersService.allUser();
+  }
+
+  @Get('/students')
+  findAllStudent() {
+    return this.usersService.allStudent();
   }
 
   @Post('/register')

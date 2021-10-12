@@ -14,15 +14,33 @@ import { FeedModule } from './feed/feed.module';
     UsersModule,
     // connect postgres -> from env local
     ConfigModule.forRoot({ isGlobal: true }),
+    // TypeOrmModule.forRoot({
+    //   type: `postgres`,
+    //   host: process.env.DB_HOST, // local host (ex : 127.0.0.1)
+    //   port: parseInt(<string>process.env.DB_PORT), // port (default : 5432)
+    //   username: process.env.DB_USERNAME, // user name for postgres
+    //   password: process.env.DB_PASS, // pass
+    //   database: process.env.DB, // name Database
+    //   autoLoadEntities: true,
+    //   synchronize: true,
+    // }),
     TypeOrmModule.forRoot({
       type: `postgres`,
-      host: process.env.DB_HOST, // local host (ex : 127.0.0.1)
-      port: parseInt(<string>process.env.DB_PORT), // port (default : 5432)
-      username: process.env.DB_USERNAME, // user name for postgres
-      password: process.env.DB_PASS, // pass
-      // database: process.env. , // name Database
+      host: process.env.DB_HOST_PRODUCTION,
+      port: 5432,
+      username: process.env.DB_USERNAME_PRODUCTION,
+      password: process.env.DB_PASS_PRODUCTION,
+      database: process.env.DB_PRODUCTION,
       autoLoadEntities: true,
       synchronize: true,
+      dropSchema: false,
+      logging: true,
+      ssl: true,
+      extra: {
+        ssl: {
+          rejectUnauthorized: false,
+        },
+      },
     }),
     FeedModule,
   ],
