@@ -12,19 +12,3 @@ export interface user {
   address: string;
   roleId: number;
 }
-
-export interface studentClass {
-  user: user;
-  id: number;
-  isPaid: boolean;
-  // classId: [number];
-}
-
-export interface teacher {
-  user: user;
-  id: number;
-  wage: number;
-  subWage: number;
-  workTime: number;
-  classId: [number];
-}

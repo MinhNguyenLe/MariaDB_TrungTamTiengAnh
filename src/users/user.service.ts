@@ -1,8 +1,9 @@
+import { studentClass } from '../NonModule/interface/studentClass.interface';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserEntity } from './user.entity';
-import { StudentEntity } from './student.entity';
-import { user, studentClass } from './user.interface';
+import { UserEntity } from '../NonModule/entity/User.entity';
+import { StudentEntity } from '../NonModule/entity/Student.entity';
+import { user } from '../NonModule/interface/user.interface';
 import { Repository } from 'typeorm';
 
 @Injectable()
