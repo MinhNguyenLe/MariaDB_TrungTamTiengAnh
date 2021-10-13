@@ -18,7 +18,7 @@ export class UserEntity {
   lastName: string;
 
   @Column({ default: '' })
-  surName: string;
+  firstName: string;
 
   @Column({ default: '' })
   placeBirth: string;
@@ -32,8 +32,8 @@ export class UserEntity {
   @Column({ default: '' })
   address: string;
 
-  @Column({ default: '' })
-  gender: string;
+  @Column({ default: 0 }) // 0 : nu 1 : nam
+  gender: number;
 
   @Column()
   roleId: number;
