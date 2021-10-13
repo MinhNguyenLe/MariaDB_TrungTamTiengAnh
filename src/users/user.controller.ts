@@ -30,6 +30,7 @@ export class UsersController {
 
   @Post('/register')
   register(@Body('account') account: user) {
+    // console.log(account);
     if (!account.userName) {
       customStatusCode('INTERNAL_SERVER_ERROR', 'user name not found');
     }
