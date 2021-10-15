@@ -6,6 +6,7 @@ import { UserEntity } from '../NonModule/entity/User.entity';
 import { StudentEntity } from '../NonModule/entity/Student.entity';
 import { user } from '../NonModule/interface/user.interface';
 import { Repository } from 'typeorm';
+import { log } from 'console';
 
 @Injectable()
 export class UsersService {
@@ -27,12 +28,20 @@ export class UsersService {
   }
 
   allUser(): Promise<user[]> {
+    log("findOne: " + this.usersRepository.find());
     return this.usersRepository.find();
   }
 
   allStudent(): Promise<student[]> {
     return this.studentsRepository.find();
   }
+  async findOne(username: string): Promise<user | undefined> {
+    log("findOne: " + JSON.stringify(this.usersRepository.find()));
+    return this.usersRepository.find({userName: username})[0];
+  }
+
+
+  
   // async login(): Promise<user> {
   //   const data = await this.usersRepository.findOne({ id: 2 });
   //   console.log(data);

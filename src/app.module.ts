@@ -7,9 +7,11 @@ import { UsersModule } from './users/user.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { FeedModule } from './feed/feed.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
+    AuthModule,
     ProductsModule,
     UsersModule,
     // connect postgres -> from env local
