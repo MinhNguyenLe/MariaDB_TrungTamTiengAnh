@@ -22,7 +22,10 @@ export class UsersController {
   findAllUser() {
     return this.usersService.allUser();
   }
-
+  @Delete()
+  deleteUserById(@Body('id')id:number) {
+    return this.usersService.deleteUserByID(id);
+  }
   @Get('/students')
   findAllStudent() {
     return this.usersService.allStudent();

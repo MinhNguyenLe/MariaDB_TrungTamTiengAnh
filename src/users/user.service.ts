@@ -42,8 +42,10 @@ export class UsersService {
     });
   }
 
-
-
+  async deleteUserByID(userID:number){
+    await this.usersRepository.delete({ id: userID });
+  }
+  
   // async login(): Promise<user> {
   //   const data = await this.usersRepository.findOne({ id: 2 });
   //   console.log(data);
