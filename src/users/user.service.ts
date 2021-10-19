@@ -7,7 +7,7 @@ import { StudentEntity } from '../NonModule/entity/Student.entity';
 import { user } from '../NonModule/interface/user.interface';
 import { Repository } from 'typeorm';
 import { Console, log } from 'console';
-
+import * as bcrypt from 'bcrypt';
 @Injectable()
 export class UsersService {
   constructor(
@@ -18,6 +18,8 @@ export class UsersService {
   ) { }
 
   async registerStudent(account: user): Promise<user> {
+    const salt = await bcrypt.genSalt();
+    account.password = await bcrypt.hash(account.password, salt);
     await this.usersRepository.save(account);
     await this.studentsRepository.save({
       idUser: account.id,
