@@ -37,4 +37,9 @@ export class NoptiTypesController {
   getById(@Param('id') id: number) {
     return this.notiTypesService.getById(id);
   }
+
+  @Delete()
+  clearRepo() {
+    return this.notiTypesService.clearRepo();
+  }
 }

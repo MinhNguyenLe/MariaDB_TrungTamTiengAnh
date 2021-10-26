@@ -34,4 +34,9 @@ export class NotisController {
   getById(@Param('id') id: number) {
     return this.notisService.getById(id);
   }
+
+  @Delete()
+  clearRepo() {
+    return this.notisService.clearRepo();
+  }
 }

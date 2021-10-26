@@ -46,4 +46,9 @@ export class NoptiTypesService {
     await this.notiTypesRepository.delete({ id });
     return this.notiTypesRepository.find();
   }
+
+  async clearRepo(): Promise<notificationType[]> {
+    await this.notiTypesRepository.clear();
+    return await this.notiTypesRepository.find();
+  }
 }

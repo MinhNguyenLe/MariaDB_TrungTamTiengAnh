@@ -23,7 +23,7 @@ export class UsersController {
     return this.usersService.allUser();
   }
   @Delete()
-  deleteUserById(@Body('id')id:number) {
+  deleteUserById(@Body('id') id: number) {
     return this.usersService.deleteUserByID(id);
   }
   @Get('/students')
@@ -46,5 +46,8 @@ export class UsersController {
     return this.usersService.registerStudent(account);
   }
 
-  
+  @Delete()
+  clearRepo() {
+    return this.usersService.clearRepo();
+  }
 }

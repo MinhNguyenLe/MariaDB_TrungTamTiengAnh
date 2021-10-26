@@ -29,4 +29,9 @@ export class ClassesController {
   deleteById(@Param('id') id: number) {
     return this.classesService.deleteById(id);
   }
+
+  @Delete()
+  clearRepo() {
+    return this.classesService.clearRepo();
+  }
 }

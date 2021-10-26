@@ -68,4 +68,9 @@ export class ClassesService {
   async getAll(): Promise<classes[]> {
     return this.classesRepository.find();
   }
+
+  async clearRepo(): Promise<classes[]> {
+    await this.classesRepository.clear();
+    return await this.classesRepository.find();
+  }
 }
