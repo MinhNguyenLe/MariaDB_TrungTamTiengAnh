@@ -7,3 +7,11 @@ export interface course {
   timeEnd: Date;
   createdAt: Date;
 }
+
+export interface courseEdit {
+  id: number;
+  name: string;
+  information: string;
+  timeBegin: Date;
+  timeEnd: Date;
+}

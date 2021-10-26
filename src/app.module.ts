@@ -10,6 +10,7 @@ import { AuthModule } from './auth/auth.module';
 import { CoursesModule } from './courses/courses.module';
 import { ClassesModule } from './classes/classes.module';
 import { NotisModule } from './notis/notis.module';
+import { ClassroomsModule } from './classrooms/classrooms.module';
 
 @Module({
   imports: [
@@ -49,6 +50,7 @@ import { NotisModule } from './notis/notis.module';
     CoursesModule,
     ClassesModule,
     NotisModule,
+    ClassroomsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
