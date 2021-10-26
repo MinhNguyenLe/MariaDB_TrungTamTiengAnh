@@ -5,6 +5,15 @@ export class ReviewEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column({ default: 0 })
+  rating: number;
+
+  @Column({ default: '' })
+  note: string;
+
+  @Column({ nullable: false })
+  idStudent: number;
+
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 }

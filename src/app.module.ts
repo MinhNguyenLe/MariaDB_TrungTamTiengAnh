@@ -12,6 +12,7 @@ import { ClassesModule } from './classes/classes.module';
 import { NotisModule } from './notis/notis.module';
 import { ClassroomsModule } from './classrooms/classrooms.module';
 import { NotiTypesModule } from './noti-types/noti-types.module';
+import { ReviewsModule } from './reviews/reviews.module';
 
 @Module({
   imports: [
@@ -53,6 +54,7 @@ import { NotiTypesModule } from './noti-types/noti-types.module';
     NotisModule,
     ClassroomsModule,
     NotiTypesModule,
+    ReviewsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
