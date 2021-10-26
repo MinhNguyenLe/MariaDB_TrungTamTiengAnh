@@ -6,9 +6,10 @@ import { UsersModule } from './users/user.module';
 
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { FeedModule } from './feed/feed.module';
 import { AuthModule } from './auth/auth.module';
-import { CourseModule } from './course/course.module';
+import { CoursesModule } from './courses/courses.module';
+import { ClassesModule } from './classes/classes.module';
+import { NotisModule } from './notis/notis.module';
 
 @Module({
   imports: [
@@ -45,8 +46,9 @@ import { CourseModule } from './course/course.module';
         },
       },
     }),
-    FeedModule,
-    CourseModule,
+    CoursesModule,
+    ClassesModule,
+    NotisModule,
   ],
   controllers: [AppController],
   providers: [AppService],

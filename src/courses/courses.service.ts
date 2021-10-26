@@ -5,7 +5,7 @@ import { course } from 'src/NonModule/interface/course.interface';
 import { Repository } from 'typeorm';
 
 @Injectable()
-export class CourseService {
+export class CoursesService {
   constructor(
     @InjectRepository(CourseEntity)
     private coursesRepository: Repository<CourseEntity>,
@@ -13,6 +13,14 @@ export class CourseService {
 
   async createCourse(content: course): Promise<course[]> {
     await this.coursesRepository.save(content);
+    return this.coursesRepository.find();
+  }
+
+  async getById(id: number): Promise<course> {
+    return this.coursesRepository.findOne({ where: { id } });
+  }
+
+  async getAll(): Promise<course[]> {
     return this.coursesRepository.find();
   }
 }
