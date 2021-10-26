@@ -8,6 +8,14 @@ export interface course {
   createdAt: Date;
 }
 
+export interface newCourse {
+  name: string;
+  information: string;
+  classID: number[];
+  timeBegin: Date;
+  timeEnd: Date;
+}
+
 export interface courseEdit {
   id: number;
   name: string;

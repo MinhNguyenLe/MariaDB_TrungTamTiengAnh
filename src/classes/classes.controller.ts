@@ -1,5 +1,9 @@
 import { Body, Controller, Post, Get, Delete, Param } from '@nestjs/common';
-import { classes, classesEdit } from 'src/NonModule/interface/class.interface';
+import {
+  classes,
+  classesEdit,
+  newClasses,
+} from 'src/NonModule/interface/class.interface';
 import { ClassesService } from './classes.service';
 
 @Controller('classes')
@@ -7,7 +11,7 @@ export class ClassesController {
   constructor(private readonly classesService: ClassesService) {}
 
   @Post('/create')
-  create(@Body('content') content: classes) {
+  create(@Body('content') content: newClasses) {
     return this.classesService.createClass(content);
   }
 

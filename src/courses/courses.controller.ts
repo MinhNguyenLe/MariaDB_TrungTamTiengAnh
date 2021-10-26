@@ -7,7 +7,11 @@ import {
   Query,
   Delete,
 } from '@nestjs/common';
-import { course, courseEdit } from 'src/NonModule/interface/course.interface';
+import {
+  course,
+  courseEdit,
+  newCourse,
+} from 'src/NonModule/interface/course.interface';
 import { CoursesService } from './courses.service';
 
 @Controller('courses')
@@ -15,7 +19,7 @@ export class CoursesController {
   constructor(private readonly coursesService: CoursesService) {}
 
   @Post('/create')
-  create(@Body('content') content: course) {
+  create(@Body('content') content: newCourse) {
     return this.coursesService.createCourse(content);
   }
 

@@ -3,7 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import customStatusCode from 'src/NonModule/customStatusCode';
 import { ClassEntity } from 'src/NonModule/entity/Class.entity';
 import { CourseEntity } from 'src/NonModule/entity/Course.entity';
-import { classes, classesEdit } from 'src/NonModule/interface/class.interface';
+import {
+  classes,
+  classesEdit,
+  newClasses,
+} from 'src/NonModule/interface/class.interface';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -15,7 +19,7 @@ export class ClassesService {
     private coursesRepository: Repository<CourseEntity>,
   ) {}
 
-  async createClass(content: classes): Promise<classes[]> {
+  async createClass(content: newClasses): Promise<classes[]> {
     if (!content.courseId)
       customStatusCode('INTERNAL_SERVER_ERROR', 'id of course must require');
 
