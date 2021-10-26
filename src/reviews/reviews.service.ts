@@ -6,7 +6,7 @@ import {
   review,
   editReview,
 } from 'src/NonModule/interface/review.interface';
-import { Repository } from 'typeorm';
+import { Repository, MoreThanOrEqual } from 'typeorm';
 
 @Injectable()
 export class ReviewsService {
@@ -42,5 +42,14 @@ export class ReviewsService {
   async deleteById(id: number): Promise<review[]> {
     await this.reviewsRepository.delete({ id });
     return this.reviewsRepository.find();
+  }
+
+  async getByClass(idClass: number): Promise<review[]> {
+    return this.reviewsRepository.find({ where: { idClass } });
+  }
+
+  async clearRepo(): Promise<review[]> {
+    await this.reviewsRepository.clear();
+    return await this.reviewsRepository.find();
   }
 }

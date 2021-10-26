@@ -14,6 +14,9 @@ export class ReviewEntity {
   @Column({ nullable: false })
   idStudent: number;
 
+  @Column({ nullable: false })
+  idClass: number;
+
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 }
