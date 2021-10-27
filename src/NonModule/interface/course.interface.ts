@@ -2,7 +2,7 @@ export interface course {
   id: number;
   name: string;
   information: string;
-  classID: number[];
+  idClass: number[];
   timeBegin: Date;
   timeEnd: Date;
   createdAt: Date;
@@ -11,7 +11,7 @@ export interface course {
 export interface newCourse {
   name: string;
   information: string;
-  classID: number[];
+  idClass: number[];
   timeBegin: Date;
   timeEnd: Date;
 }

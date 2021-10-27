@@ -26,7 +26,7 @@ export class NotisController {
   }
 
   @Get()
-  getAllCourses() {
+  getAll() {
     return this.notisService.getAll();
   }
 

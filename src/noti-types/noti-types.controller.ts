@@ -7,11 +7,11 @@ import {
   newNotificationType,
   notificationType,
 } from 'src/NonModule/interface/notificationType.interface';
-import { NoptiTypesService } from './nopti-types.service';
+import { NotiTypesService } from './noti-types.service';
 
-@Controller('nopti-types')
-export class NoptiTypesController {
-  constructor(private readonly notiTypesService: NoptiTypesService) {}
+@Controller('noti-types')
+export class NotiTypesController {
+  constructor(private readonly notiTypesService: NotiTypesService) {}
 
   @Post('/create')
   create(@Body('content') content: newNotificationType) {
@@ -29,7 +29,7 @@ export class NoptiTypesController {
   }
 
   @Get()
-  getAllCourses() {
+  getAll() {
     return this.notiTypesService.getAll();
   }
 

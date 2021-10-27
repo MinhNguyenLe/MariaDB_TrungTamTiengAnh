@@ -6,13 +6,16 @@ export class NotificationClassEntity {
   id: number;
 
   @Column({ nullable: false })
-  typeId: number;
+  idType: number;
 
   @Column({ default: '' })
   note: string;
 
   @Column('int', { array: true, default: [] })
-  commentId: number[];
+  idComment: number[];
+
+  @Column({ nullable: false })
+  idClass: number;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;

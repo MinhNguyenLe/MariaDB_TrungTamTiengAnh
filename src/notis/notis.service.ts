@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ClassEntity } from 'src/NonModule/entity/Class.entity';
 import { NotificationClassEntity } from 'src/NonModule/entity/NotificationClass.entity';
 import {
   newCourse,
@@ -18,10 +19,26 @@ export class NotisService {
   constructor(
     @InjectRepository(NotificationClassEntity)
     private notiRepository: Repository<NotificationClassEntity>,
+    @InjectRepository(ClassEntity)
+    private classesRepository: Repository<ClassEntity>,
   ) {}
 
   async create(content: newNotificationClass): Promise<notificationClass[]> {
-    await this.notiRepository.save(content);
+    const newNoti = await this.notiRepository.save(content);
+
+    const classHere = await this.classesRepository.findOne({
+      id: content.idClass,
+    });
+    const arrNoti = classHere.idNoti;
+    arrNoti.push(newNoti.id);
+
+    await this.classesRepository.update(
+      { id: content.idClass },
+      {
+        idNoti: arrNoti,
+      },
+    );
+
     return this.notiRepository.find();
   }
 
@@ -29,7 +46,7 @@ export class NotisService {
     await this.notiRepository.update(
       { id: content.id },
       {
-        typeId: content.typeId,
+        idType: content.idType,
         note: content.note,
       },
     );

@@ -1,17 +1,19 @@
 export interface notificationClass {
   id: number;
-  typeId: number;
+  idType: number;
   note: string;
-  commentId: number[];
+  idComment: number[];
+  idClass: number;
 }
 
 export interface newNotificationClass {
-  typeId: number;
+  idType: number;
   note: string;
+  idClass: number;
 }
 
 export interface editNotificationClass {
   id: number;
-  typeId: number;
+  idType: number;
   note: string;
 }
