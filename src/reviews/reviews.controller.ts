@@ -33,4 +33,14 @@ export class ReviewsController {
   getById(@Param('id') id: number) {
     return this.reviewsService.getById(id);
   }
+
+  @Delete()
+  clearRepo() {
+    return this.reviewsService.clearRepo();
+  }
+
+  @Get('/class/:id')
+  getByClass(@Param('id') id: number) {
+    return this.reviewsService.getByClass(id);
+  }
 }

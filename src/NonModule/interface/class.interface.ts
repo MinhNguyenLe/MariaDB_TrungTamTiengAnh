@@ -1,20 +1,20 @@
 export interface classes {
   id: number;
   name: string;
-  roomId: number;
-  notiId: number;
+  idRoom: number;
+  idNoti: number[];
   createdAt: Date;
-  courseId: number;
+  idCourse: number;
 }
 
 export interface newClasses {
   name: string;
-  roomId: number;
-  notiId: number;
-  courseId: number;
+  idRoom: number;
+  idNoti: number[];
+  idCourse: number;
 }
 export interface classesEdit {
   name: string;
   id: number;
-  roomId: number;
+  idRoom: number;
 }

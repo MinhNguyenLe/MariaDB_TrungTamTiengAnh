@@ -3,12 +3,14 @@ export interface review {
   rating: number;
   note: string;
   idStudent: number;
+  idClass: number;
 }
 
 export interface newReview {
   rating: number;
   note: string;
   idStudent: number;
+  idClass: number;
 }
 
 export interface editReview {

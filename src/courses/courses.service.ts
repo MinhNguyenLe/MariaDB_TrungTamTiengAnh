@@ -45,4 +45,9 @@ export class CoursesService {
     await this.coursesRepository.delete({ id });
     return this.coursesRepository.find();
   }
+
+  async clearRepo(): Promise<course[]> {
+    await this.coursesRepository.clear();
+    return await this.coursesRepository.find();
+  }
 }

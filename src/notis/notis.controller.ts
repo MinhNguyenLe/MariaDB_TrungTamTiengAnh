@@ -26,12 +26,17 @@ export class NotisController {
   }
 
   @Get()
-  getAllCourses() {
+  getAll() {
     return this.notisService.getAll();
   }
 
   @Get(':id')
   getById(@Param('id') id: number) {
     return this.notisService.getById(id);
+  }
+
+  @Delete()
+  clearRepo() {
+    return this.notisService.clearRepo();
   }
 }

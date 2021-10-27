@@ -20,25 +20,25 @@ export class ClassesService {
   ) {}
 
   async createClass(content: newClasses): Promise<classes[]> {
-    if (!content.courseId)
+    if (!content.idCourse)
       customStatusCode('INTERNAL_SERVER_ERROR', 'id of course must require');
 
     const newClass = await this.classesRepository.save(content);
 
     const course = await this.coursesRepository.findOne({
-      where: { id: content.courseId },
+      where: { id: content.idCourse },
     });
 
-    const arr = [...course.classID];
+    const arr = [...course.idClass];
 
     arr.push(newClass.id);
 
     await this.coursesRepository.update(
       {
-        id: content.courseId,
+        id: content.idCourse,
       },
       {
-        classID: arr,
+        idClass: arr,
       },
     );
 
@@ -50,7 +50,7 @@ export class ClassesService {
       { id: content.id },
       {
         name: content.name,
-        roomId: content.roomId,
+        idRoom: content.idRoom,
       },
     );
     return this.classesRepository.findOne({ where: { id: content.id } });
@@ -67,5 +67,10 @@ export class ClassesService {
 
   async getAll(): Promise<classes[]> {
     return this.classesRepository.find();
+  }
+
+  async clearRepo(): Promise<classes[]> {
+    await this.classesRepository.clear();
+    return await this.classesRepository.find();
   }
 }

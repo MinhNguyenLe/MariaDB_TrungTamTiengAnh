@@ -12,7 +12,7 @@ export class CourseEntity {
   information: string;
 
   @Column('int', { array: true, default: [] })
-  classID: number[];
+  idClass: number[];
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   timeBegin: Date;

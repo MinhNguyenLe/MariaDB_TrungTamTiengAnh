@@ -42,4 +42,9 @@ export class CoursesController {
   getById(@Param('id') id: number) {
     return this.coursesService.getById(id);
   }
+
+  @Delete()
+  clearRepo() {
+    return this.coursesService.clearRepo();
+  }
 }

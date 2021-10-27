@@ -15,7 +15,7 @@ export class UsersService {
     private usersRepository: Repository<UserEntity>,
     @InjectRepository(StudentEntity)
     private studentsRepository: Repository<StudentEntity>,
-  ) { }
+  ) {}
 
   async registerStudent(account: user): Promise<user> {
     const salt = await bcrypt.genSalt();
@@ -39,18 +39,17 @@ export class UsersService {
   async findOne(username: string): Promise<user | undefined> {
     return this.usersRepository.findOne({
       where: {
-        userName: username
-      }
+        userName: username,
+      },
     });
   }
 
-  async deleteUserByID(userID:number){
+  async deleteUserByID(userID: number) {
     await this.usersRepository.delete({ id: userID });
   }
-  
-  // async login(): Promise<user> {
-  //   const data = await this.usersRepository.findOne({ id: 2 });
-  //   console.log(data);
-  //   return data;
-  // }
+
+  async clearRepo(): Promise<user[]> {
+    await this.usersRepository.clear();
+    return await this.usersRepository.find();
+  }
 }

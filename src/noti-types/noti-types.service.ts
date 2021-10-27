@@ -1,11 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { NotificationTypeEntity } from 'src/NonModule/entity/NotificationType.entity';
-import {
-  newNotificationClass,
-  notificationClass,
-  editNotificationClass,
-} from 'src/NonModule/interface/notificationClass.interface';
+
 import {
   newNotificationType,
   notificationType,
@@ -13,7 +9,7 @@ import {
 import { Repository } from 'typeorm';
 
 @Injectable()
-export class NoptiTypesService {
+export class NotiTypesService {
   constructor(
     @InjectRepository(NotificationTypeEntity)
     private notiTypesRepository: Repository<NotificationTypeEntity>,
@@ -45,5 +41,10 @@ export class NoptiTypesService {
   async deleteById(id: number): Promise<notificationType[]> {
     await this.notiTypesRepository.delete({ id });
     return this.notiTypesRepository.find();
+  }
+
+  async clearRepo(): Promise<notificationType[]> {
+    await this.notiTypesRepository.clear();
+    return await this.notiTypesRepository.find();
   }
 }

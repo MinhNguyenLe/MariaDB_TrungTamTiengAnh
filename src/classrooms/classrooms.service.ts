@@ -43,4 +43,9 @@ export class ClassroomsService {
     );
     return this.classroomsRepository.findOne({ where: { id: content.id } });
   }
+
+  async clearRepo(): Promise<classRoom[]> {
+    await this.classroomsRepository.clear();
+    return await this.classroomsRepository.find();
+  }
 }

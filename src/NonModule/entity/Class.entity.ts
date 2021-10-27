@@ -8,14 +8,14 @@ export class ClassEntity {
   @Column({ default: '' })
   name: string;
 
-  @Column({ default: 0 })
-  notiId: number;
+  @Column('int', { array: true, default: [] })
+  idNoti: number[];
 
   @Column({ nullable: false })
-  courseId: number;
+  idCourse: number;
 
   @Column({ default: 0 })
-  roomId: number;
+  idRoom: number;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
