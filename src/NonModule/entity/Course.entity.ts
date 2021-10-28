@@ -11,6 +11,18 @@ export class CourseEntity {
   @Column({ default: '' })
   information: string;
 
+  @Column({ default: '' })
+  level: string;
+
+  @Column({ default: '' })
+  docs: string;
+
+  @Column({ default: 0 })
+  tuition: number;
+
+  @Column({ default: 0 })
+  members: number;
+
   @Column('int', { array: true, default: [] })
   idClass: number[];
 
