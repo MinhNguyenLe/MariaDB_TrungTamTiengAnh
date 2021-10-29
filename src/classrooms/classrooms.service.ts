@@ -9,6 +9,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ClassRoomEntity } from 'src/NonModule/entity/ClassRoom.entity';
 import { Repository } from 'typeorm';
 
+import { useCheckTimeTableRoom } from 'src/NonModule/customHook/useCheckTimeTableRoom';
+
 @Injectable()
 export class ClassroomsService {
   constructor(
@@ -47,10 +49,26 @@ export class ClassroomsService {
   }
 
   async editTimeTable(content: editTimeTableRoom): Promise<classRoom> {
+    const { check, arrangeTimeTable } = useCheckTimeTableRoom();
+    const room = await this.classroomsRepository.findOne({
+      where: { id: content.id },
+    });
+
+    /**
+     * validate input -> return string[]
+     */
+    const accept = check(room.timeTable, content.timeTable);
+
+    const result = [...room.timeTable];
+    accept.forEach((e) => {
+      result.push(e);
+    });
+    const resultArrange = arrangeTimeTable(result);
+
     await this.classroomsRepository.update(
       { id: content.id },
       {
-        timeTable: content.timeTable,
+        timeTable: resultArrange,
       },
     );
     return this.classroomsRepository.findOne({ where: { id: content.id } });
