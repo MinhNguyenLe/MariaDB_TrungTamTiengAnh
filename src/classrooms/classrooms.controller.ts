@@ -1,5 +1,12 @@
+import customStatusCode from 'src/NonModule/customStatusCode';
+
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
-import { classRoom } from 'src/NonModule/interface/classRoom.interface';
+import {
+  classRoom,
+  editTimeTableRoom,
+  editClassRoom,
+  newClassRoom,
+} from 'src/NonModule/interface/classRoom.interface';
 import { ClassroomsService } from './classrooms.service';
 
 @Controller('classrooms')
@@ -7,7 +14,7 @@ export class ClassroomsController {
   constructor(private readonly classroomsService: ClassroomsService) {}
 
   @Post('/create')
-  create(@Body('content') content: classRoom) {
+  create(@Body('content') content: newClassRoom) {
     return this.classroomsService.create(content);
   }
 
@@ -17,8 +24,18 @@ export class ClassroomsController {
   }
 
   @Post('/edit')
-  edit(@Body('content') content: classRoom) {
-    return this.classroomsService.edit(content);
+  edit(@Body('content') content: editClassRoom) {
+    return this.classroomsService.editInfor(content);
+  }
+
+  @Post('/edit-time')
+  editTimeTable(@Body('content') content: editTimeTableRoom) {
+    content.timeTable.forEach((time) => {
+      if (time.length != 10)
+        customStatusCode('NOT_ACCEPTABLE', 'Format for timetable incorrect!');
+    });
+
+    return this.classroomsService.editTimeTable(content);
   }
 
   @Delete(':id')
