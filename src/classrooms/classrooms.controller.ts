@@ -6,6 +6,7 @@ import {
   editTimeTableRoom,
   editClassRoom,
   newClassRoom,
+  deleteTimeTableRoom,
 } from 'src/NonModule/interface/classRoom.interface';
 import { ClassroomsService } from './classrooms.service';
 
@@ -28,7 +29,7 @@ export class ClassroomsController {
     return this.classroomsService.editInfor(content);
   }
 
-  @Post('/edit-time')
+  @Post('/edit-timetable')
   editTimeTable(@Body('content') content: editTimeTableRoom) {
     content.timeTable.forEach((time) => {
       if (time.length != 10)
@@ -36,6 +37,11 @@ export class ClassroomsController {
     });
 
     return this.classroomsService.editTimeTable(content);
+  }
+
+  @Delete('/delete-timetable')
+  deleteTimeTable(@Body('content') content: deleteTimeTableRoom) {
+    return this.classroomsService.deleteTimeTable(content);
   }
 
   @Delete(':id')
