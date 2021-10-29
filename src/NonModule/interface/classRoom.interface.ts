@@ -20,3 +20,7 @@ export interface editTimeTableRoom {
   id: number;
   timeTable: string[];
 }
+export interface deleteTimeTableRoom {
+  id: number;
+  value: string;
+}

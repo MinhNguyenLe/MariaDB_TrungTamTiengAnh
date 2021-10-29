@@ -3,6 +3,7 @@ import {
   editClassRoom,
   newClassRoom,
   editTimeTableRoom,
+  deleteTimeTableRoom,
 } from './../NonModule/interface/classRoom.interface';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -74,8 +75,29 @@ export class ClassroomsService {
     return this.classroomsRepository.findOne({ where: { id: content.id } });
   }
 
+  async deleteTimeTable(content: deleteTimeTableRoom): Promise<classRoom> {
+    /**
+     * validate input -> return string[]
+     */
+    const classroom = await this.classroomsRepository.findOne({
+      where: { id: content.id },
+    });
+
+    const result = classroom.timeTable.filter((e) => {
+      return e != content.value;
+    });
+
+    await this.classroomsRepository.update(
+      { id: content.id },
+      {
+        timeTable: result,
+      },
+    );
+    return this.classroomsRepository.findOne({ where: { id: content.id } });
+  }
+
   async clearRepo(): Promise<classRoom[]> {
     await this.classroomsRepository.clear();
-    return await this.classroomsRepository.find();
+    return this.classroomsRepository.find();
   }
 }
