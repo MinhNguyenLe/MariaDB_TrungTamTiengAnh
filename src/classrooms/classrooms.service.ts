@@ -2,6 +2,7 @@ import {
   classRoom,
   editClassRoom,
   newClassRoom,
+  editTimeTableRoom,
 } from './../NonModule/interface/classRoom.interface';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -34,11 +35,22 @@ export class ClassroomsService {
     return this.classroomsRepository.find();
   }
 
-  async edit(content: editClassRoom): Promise<classRoom> {
+  async editInfor(content: editClassRoom): Promise<classRoom> {
     await this.classroomsRepository.update(
       { id: content.id },
       {
         name: content.name,
+        address: content.address,
+      },
+    );
+    return this.classroomsRepository.findOne({ where: { id: content.id } });
+  }
+
+  async editTimeTable(content: editTimeTableRoom): Promise<classRoom> {
+    await this.classroomsRepository.update(
+      { id: content.id },
+      {
+        timeTable: content.timeTable,
       },
     );
     return this.classroomsRepository.findOne({ where: { id: content.id } });
