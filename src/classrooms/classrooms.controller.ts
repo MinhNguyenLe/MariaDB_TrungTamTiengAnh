@@ -28,7 +28,7 @@ export class ClassroomsController {
     return this.classroomsService.editInfor(content);
   }
 
-  @Post('/edit-time')
+  @Post('/edit-timetable')
   editTimeTable(@Body('content') content: editTimeTableRoom) {
     content.timeTable.forEach((time) => {
       if (time.length != 10)
