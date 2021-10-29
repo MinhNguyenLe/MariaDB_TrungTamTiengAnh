@@ -8,7 +8,6 @@ export interface classRoom {
 export interface newClassRoom {
   name: string;
   address: string;
-  timeTable: string[]; // location  in Center
 }
 
 export interface editClassRoom {
