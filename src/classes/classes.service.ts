@@ -23,24 +23,28 @@ export class ClassesService {
     if (!content.idCourse)
       customStatusCode('INTERNAL_SERVER_ERROR', 'id of course must require');
 
-    const newClass = await this.classesRepository.save(content);
-
     const course = await this.coursesRepository.findOne({
       where: { id: content.idCourse },
     });
+    const newClass = await this.classesRepository.save({
+      name: content.name,
+      idNoti: content.idNoti,
+      courses: course,
+      idRoom: content.idRoom,
+    });
 
-    const arr = [...course.idClass];
+    // const arr = course.classes ? [...course.classes] : [];
 
-    arr.push(newClass.id);
+    // arr.push(newClass);
 
-    await this.coursesRepository.update(
-      {
-        id: content.idCourse,
-      },
-      {
-        idClass: arr,
-      },
-    );
+    // await this.coursesRepository.update(
+    //   {
+    //     id: content.idCourse,
+    //   },
+    //   {
+    //     classes: arr,
+    //   },
+    // );
 
     return this.classesRepository.find();
   }
