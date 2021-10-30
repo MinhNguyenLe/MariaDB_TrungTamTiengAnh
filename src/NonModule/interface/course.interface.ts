@@ -1,3 +1,5 @@
+import { classes } from './class.interface';
+
 export interface course {
   id: number;
   name: string;
@@ -6,7 +8,7 @@ export interface course {
   docs: string;
   members: number;
   tuition: number;
-  idClass: number[];
+  classes: classes[];
   timeBegin: Date;
   timeEnd: Date;
   createdAt: Date;
@@ -19,7 +21,7 @@ export interface newCourse {
   docs: string;
   members: number;
   tuition: number;
-  idClass: number[];
+  classes: classes[];
   timeBegin: Date;
   timeEnd: Date;
 }

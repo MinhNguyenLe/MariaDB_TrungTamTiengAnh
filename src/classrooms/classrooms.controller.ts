@@ -32,8 +32,8 @@ export class ClassroomsController {
   @Post('/edit-timetable')
   editTimeTable(@Body('content') content: editTimeTableRoom) {
     content.timeTable.forEach((time) => {
-      if (time.length != 10)
-        customStatusCode('NOT_ACCEPTABLE', 'Format for timetable incorrect!');
+      // if (time.length != 10)
+      //   customStatusCode('NOT_ACCEPTABLE', 'Format for timetable incorrect!');
     });
 
     return this.classroomsService.editTimeTable(content);

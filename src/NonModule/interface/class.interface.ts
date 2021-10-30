@@ -1,10 +1,12 @@
+import { course } from './course.interface';
+
 export interface classes {
   id: number;
   name: string;
   idRoom: number;
   idNoti: number[];
   createdAt: Date;
-  idCourse: number;
+  courses: course;
 }
 
 export interface newClasses {

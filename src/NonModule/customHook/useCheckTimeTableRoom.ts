@@ -28,59 +28,13 @@ const checkValPushArr = (arr) => {
   return result;
 };
 
-const formatTimeTable = (arr) => {
-  /*
-   *arr : ["12.0013.00"]
-   */
-  const formatArr = [];
-
-  [...arr].forEach((e) => {
-    formatArr.push({
-      begin: parseFloat(e.slice(0, 5)),
-      end: parseFloat(e.slice(5, 10)),
-    });
-  });
-
-  return formatArr;
-};
-
-const addZero = (str) => {
-  /**
-   * 2
-   */
-  if (str.length === 1) return '0' + str + '.00';
-
-  /**
-   * 2.5
-   */
-  if (str.length === 3) return '0' + str + '0';
-
-  /**
-   * 12.5
-   */
-  if (str.length === 4) return str + '0';
-
-  /**
-   *12
-   */
-  if (str.length === 2) return str + '.00';
-};
-
-const revertOldFormat = (obj) => {
-  return addZero(obj.begin.toString()) + addZero(obj.end.toString());
-};
-
 const check = (befArr, aftArr) => {
-  const fillArr = [],
-    result = [];
-  for (const value of aftArr) {
-    if (value.length === 10) fillArr.push(value);
-  }
+  const result = [];
 
   /**
    * success if push
    */
-  const acceptArr = checkValPushArr(formatTimeTable(fillArr));
+  const acceptArr = checkValPushArr(aftArr);
 
   /**
    * if array parent empty -> accept all array acceptArr
@@ -88,22 +42,20 @@ const check = (befArr, aftArr) => {
   if (befArr.length === 0) {
     const result = [];
     acceptArr.forEach((element) => {
-      result.push(revertOldFormat(element));
+      result.push(element);
     });
 
     return result;
   }
 
-  const formatBefArr = formatTimeTable(befArr);
-
   for (const value of acceptArr) {
-    for (const [index, e] of formatBefArr.entries()) {
+    for (const [index, e] of befArr.entries()) {
       /**
        * array parent just have once element
        */
-      if (formatBefArr.length === 1) {
+      if (befArr.length === 1) {
         if (value['begin'] >= e['end'] || value['end'] <= e['begin']) {
-          result.push(revertOldFormat(value));
+          result.push(value);
         }
       } else {
         /**
@@ -111,23 +63,20 @@ const check = (befArr, aftArr) => {
          */
         if (index === 0) {
           if (value['end'] <= e['begin']) {
-            result.push(revertOldFormat(value));
+            result.push(value);
           }
-        } else if (index === formatBefArr.length - 1) {
+        } else if (index === befArr.length - 1) {
           /**
            * the last value of list array parent
            */
           if (value['begin'] >= e['end']) {
-            result.push(revertOldFormat(value));
+            result.push(value);
           }
         } else {
           /**
            * push begin > begin begin && push end < after begin
            */
-          if (
-            value.begin >= e.end &&
-            value.end <= formatBefArr[index + 1]['begin']
-          ) {
+          if (value.begin >= e.end && value.end <= befArr[index + 1]['begin']) {
             result.push(value);
           }
         }
@@ -138,19 +87,6 @@ const check = (befArr, aftArr) => {
   return result;
 };
 
-const arrangeTimeTable = (arr) => {
-  /**
-   * format -> {begin, end} -> arrange -> string
-   */
-  const format = checkValPushArr(formatTimeTable(arr));
-  const result = [];
-  format.forEach((element) => {
-    result.push(revertOldFormat(element));
-  });
-
-  return result;
-};
-
 export const useCheckTimeTableRoom = () => {
-  return { check, arrangeTimeTable };
+  return { check, checkValPushArr };
 };
