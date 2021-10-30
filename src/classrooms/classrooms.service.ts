@@ -50,28 +50,23 @@ export class ClassroomsService {
   }
 
   async editTimeTable(content: editTimeTableRoom): Promise<classRoom> {
-    const { check, arrangeTimeTable } = useCheckTimeTableRoom();
-    const room = await this.classroomsRepository.findOne({
-      where: { id: content.id },
-    });
+    const { check } = useCheckTimeTableRoom();
+
+    // const room = await this.classroomsRepository.findOne({
+    //   where: { id: content.id },
+    // });
 
     /**
-     * validate input -> return string[]
+     * validate input -> return timeTableSort[]
      */
-    const accept = check(room.timeTable, content.timeTable);
+    // const accept = check(room.timeTable, content.timeTable);
 
-    const result = [...room.timeTable];
-    accept.forEach((e) => {
-      result.push(e);
-    });
-    const resultArrange = arrangeTimeTable(result);
-
-    await this.classroomsRepository.update(
-      { id: content.id },
-      {
-        timeTable: resultArrange,
-      },
-    );
+    // await this.classroomsRepository.update(
+    //   { id: content.id },
+    //   {
+    //     timeTable: [],
+    //   },
+    // );
     return this.classroomsRepository.findOne({ where: { id: content.id } });
   }
 
@@ -84,7 +79,7 @@ export class ClassroomsService {
     });
 
     const result = classroom.timeTable.filter((e) => {
-      return e != content.value;
+      return e != content.idTimeTable;
     });
 
     await this.classroomsRepository.update(

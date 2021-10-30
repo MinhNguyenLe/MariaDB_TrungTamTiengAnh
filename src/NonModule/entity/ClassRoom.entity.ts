@@ -11,8 +11,8 @@ export class ClassRoomEntity {
   @Column({ default: '' })
   address: string;
 
-  @Column('text', { array: true, default: [] })
-  timeTable: string[];
+  @Column('int', { array: true, default: [] })
+  timeTable: number[];
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
