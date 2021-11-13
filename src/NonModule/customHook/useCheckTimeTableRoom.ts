@@ -61,24 +61,20 @@ const check = (befArr, aftArr) => {
         /**
          * the first value of array parent
          */
-        if (index === 0) {
-          if (value['end'] <= e['begin']) {
-            result.push(value);
-          }
-        } else if (index === befArr.length - 1) {
+        if (index === 0 && value['end'] <= e['begin']) {
+          result.push(value);
+        }
+        if (index === befArr.length - 1 && value['begin'] >= e['end']) {
           /**
            * the last value of list array parent
            */
-          if (value['begin'] >= e['end']) {
-            result.push(value);
-          }
-        } else {
-          /**
-           * push begin > begin begin && push end < after begin
-           */
-          if (value.begin >= e.end && value.end <= befArr[index + 1]['begin']) {
-            result.push(value);
-          }
+          result.push(value);
+        }
+        /**
+         * push begin > end before && push end < after begin
+         */
+        if (value.begin >= e.end && value.end <= befArr[index + 1]['begin']) {
+          result.push(value);
         }
       }
     }
