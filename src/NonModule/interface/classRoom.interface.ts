@@ -1,10 +1,11 @@
-import { timeTableSort } from './timeTable.interface';
+import { timeTableSort, timeTable } from './timeTable.interface';
 
 export interface classRoom {
   id: number;
   name: string;
   address: string; // location in Center
-  timeTable: number[];
+  timetable: timeTable[];
+  createdAt: Date;
 }
 
 export interface newClassRoom {
@@ -20,7 +21,7 @@ export interface editClassRoom {
 
 export interface editTimeTableRoom {
   id: number;
-  timeTable: timeTableSort[];
+  timetable: timeTableSort[];
 }
 export interface deleteTimeTableRoom {
   id: number;

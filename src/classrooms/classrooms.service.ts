@@ -67,6 +67,7 @@ export class ClassroomsService {
     //     timeTable: [],
     //   },
     // );
+
     return this.classroomsRepository.findOne({ where: { id: content.id } });
   }
 
@@ -78,14 +79,14 @@ export class ClassroomsService {
       where: { id: content.id },
     });
 
-    const result = classroom.timeTable.filter((e) => {
-      return e != content.idTimeTable;
+    const result = classroom.timetable.filter((e) => {
+      // return e != content.idTimeTable;
     });
 
     await this.classroomsRepository.update(
       { id: content.id },
       {
-        timeTable: result,
+        timetable: result,
       },
     );
     return this.classroomsRepository.findOne({ where: { id: content.id } });

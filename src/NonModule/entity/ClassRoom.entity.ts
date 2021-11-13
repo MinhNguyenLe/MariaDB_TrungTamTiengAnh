@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { TimeTableEntity } from 'src/NonModule/entity/TimeTable.entity';
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity('class_room')
 export class ClassRoomEntity {
@@ -11,8 +12,11 @@ export class ClassRoomEntity {
   @Column({ default: '' })
   address: string;
 
-  @Column('int', { array: true, default: [] })
-  timeTable: number[];
+  @OneToMany(
+    () => TimeTableEntity,
+    (timetable: TimeTableEntity) => timetable.classroom,
+  )
+  timetable: TimeTableEntity[];
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;

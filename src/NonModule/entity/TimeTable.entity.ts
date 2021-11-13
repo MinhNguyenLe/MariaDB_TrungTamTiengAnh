@@ -1,15 +1,20 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { timeTable } from './../interface/timeTable.interface';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { ClassRoomEntity } from './ClassRoom.entity';
 
-@Entity('teacher_class')
+@Entity('timetable')
 export class TimeTableEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ default: 0 })
-  idClass: number;
+  classes: number;
 
-  @Column({ default: 0 })
-  idClassRoom: number;
+  @ManyToOne(
+    () => ClassRoomEntity,
+    (classroom: ClassRoomEntity) => classroom.timetable,
+  )
+  classroom: ClassRoomEntity;
 
   @Column({ default: 0 })
   begin: number;

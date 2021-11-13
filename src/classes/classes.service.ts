@@ -26,7 +26,7 @@ export class ClassesService {
     const course = await this.coursesRepository.findOne({
       where: { id: content.idCourse },
     });
-    const newClass = await this.classesRepository.save({
+    await this.classesRepository.save({
       name: content.name,
       idNoti: content.idNoti,
       courses: course,
@@ -75,6 +75,6 @@ export class ClassesService {
 
   async clearRepo(): Promise<classes[]> {
     await this.classesRepository.clear();
-    return await this.classesRepository.find();
+    return this.classesRepository.find();
   }
 }
