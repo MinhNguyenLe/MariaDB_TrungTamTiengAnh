@@ -1,5 +1,11 @@
 import { ClassEntity } from 'src/NonModule/entity/Class.entity';
-import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  JoinColumn,
+} from 'typeorm';
 
 @Entity('course')
 export class CourseEntity {
@@ -25,6 +31,7 @@ export class CourseEntity {
   members: number;
 
   @OneToMany(() => ClassEntity, (classes: ClassEntity) => classes.course)
+  @JoinColumn()
   classes: ClassEntity[];
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })

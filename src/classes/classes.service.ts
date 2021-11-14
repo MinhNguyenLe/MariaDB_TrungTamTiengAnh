@@ -24,15 +24,16 @@ export class ClassesService {
       customStatusCode('INTERNAL_SERVER_ERROR', 'id of course must require');
 
     const course = await this.coursesRepository.findOne({
-      where: { id: content.course.id },
+      where: { id: content.course },
+      relations: ['classes'],
     });
-
     if (!course)
       customStatusCode('INTERNAL_SERVER_ERROR', 'course is incorrect!');
 
+    //có course tự update qua courseEntity
     await this.classesRepository.save({
       name: content.name,
-      noti: content.noti,
+      code: content.code,
       course: course,
     });
 

@@ -3,6 +3,7 @@ import { CourseEntity } from 'src/NonModule/entity/Course.entity';
 import {
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   OneToOne,
@@ -18,6 +19,9 @@ export class ClassEntity {
   @Column({ default: '' })
   name: string;
 
+  @Column({ default: '' })
+  code: string;
+
   @OneToMany(
     () => NotificationClassEntity,
     (noti: NotificationClassEntity) => noti.classes,
@@ -25,6 +29,7 @@ export class ClassEntity {
   noti: NotificationClassEntity[];
 
   @ManyToOne(() => CourseEntity, (course: CourseEntity) => course.classes)
+  @JoinColumn()
   course: CourseEntity;
 
   @OneToMany(
