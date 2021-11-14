@@ -21,7 +21,6 @@ export interface newCourse {
   docs: string;
   members: number;
   tuition: number;
-  classes: classes[];
   timeBegin: Date;
   timeEnd: Date;
 }

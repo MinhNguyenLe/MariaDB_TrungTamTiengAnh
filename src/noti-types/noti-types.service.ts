@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { NotificationTypeEntity } from 'src/NonModule/entity/NotificationType.entity';
 
 import {
+  editNotificationType,
   newNotificationType,
   notificationType,
 } from 'src/NonModule/interface/notificationType.interface';
@@ -20,7 +21,7 @@ export class NotiTypesService {
     return this.notiTypesRepository.find();
   }
 
-  async edit(content: notificationType): Promise<notificationType> {
+  async edit(content: editNotificationType): Promise<notificationType> {
     await this.notiTypesRepository.update(
       { id: content.id },
       {

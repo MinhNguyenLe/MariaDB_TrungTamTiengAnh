@@ -2,6 +2,10 @@ function compareTimeTable(a, b) {
   return a.begin - b.begin;
 }
 
+function sortArr(arr) {
+  return [...arr].sort(compareTimeTable);
+}
+
 const checkValPushArr = (arr) => {
   /**
    * rule :  push begin != begin begin && push begin > begin begin && push end < after begin
@@ -84,5 +88,5 @@ const check = (befArr, aftArr) => {
 };
 
 export const useCheckTimeTableRoom = () => {
-  return { check, checkValPushArr };
+  return { check, checkValPushArr, sortArr };
 };

@@ -13,6 +13,7 @@ import { ClassroomsModule } from './classrooms/classrooms.module';
 import { NotiTypesModule } from './noti-types/noti-types.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import { TimetablesModule } from './timetables/timetables.module';
+import { CommentsModule } from './comments/comments.module';
 
 @Module({
   imports: [
@@ -55,6 +56,7 @@ import { TimetablesModule } from './timetables/timetables.module';
     NotiTypesModule,
     ReviewsModule,
     TimetablesModule,
+    CommentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

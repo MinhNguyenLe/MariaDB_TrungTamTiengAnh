@@ -49,11 +49,11 @@ export class CoursesService {
   async deleteById(id: number): Promise<course[]> {
     const dataDelete = await this.coursesRepository.findOne({ where: { id } });
 
-    // [...dataDelete.idClass].forEach(async (clas) => {
-    //   await this.classesRepository.delete({
-    //     id: clas,
-    //   });
-    // });
+    [...dataDelete.classes].forEach(async (item) => {
+      await this.classesRepository.delete({
+        id: item.id,
+      });
+    });
 
     await this.coursesRepository.delete({ id });
     return this.coursesRepository.find();
@@ -61,6 +61,6 @@ export class CoursesService {
 
   async clearRepo(): Promise<course[]> {
     await this.coursesRepository.clear();
-    return await this.coursesRepository.find();
+    return this.coursesRepository.find();
   }
 }

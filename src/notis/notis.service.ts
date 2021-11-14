@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ClassEntity } from 'src/NonModule/entity/Class.entity';
+import { CommentEntity } from 'src/NonModule/entity/Comment.entity';
 import { NotificationClassEntity } from 'src/NonModule/entity/NotificationClass.entity';
+import { NotificationTypeEntity } from 'src/NonModule/entity/NotificationType.entity';
 import {
   newCourse,
   course,
@@ -21,21 +23,34 @@ export class NotisService {
     private notiRepository: Repository<NotificationClassEntity>,
     @InjectRepository(ClassEntity)
     private classesRepository: Repository<ClassEntity>,
+    @InjectRepository(NotificationTypeEntity)
+    private notiTypeRepository: Repository<NotificationTypeEntity>,
+    @InjectRepository(CommentEntity)
+    private commentRepository: Repository<CommentEntity>,
   ) {}
 
   async create(content: newNotificationClass): Promise<notificationClass[]> {
-    const newNoti = await this.notiRepository.save(content);
-
-    const classHere = await this.classesRepository.findOne({
+    const classes = await this.classesRepository.findOne({
       id: content.idClass,
     });
-    const arrNoti = classHere.idNoti;
-    arrNoti.push(newNoti.id);
+
+    const typeNoti = await this.notiTypeRepository.findOne({
+      id: content.idType,
+    });
+
+    const newNoti = await this.notiRepository.save({
+      type: typeNoti,
+      classes: classes,
+      content: content.content,
+    });
+
+    const arrNoti = [...classes.noti];
+    arrNoti.push(newNoti);
 
     await this.classesRepository.update(
       { id: content.idClass },
       {
-        idNoti: arrNoti,
+        noti: arrNoti,
       },
     );
 
@@ -43,11 +58,15 @@ export class NotisService {
   }
 
   async edit(content: editNotificationClass): Promise<notificationClass> {
+    const typeNoti = await this.notiTypeRepository.findOne({
+      id: content.idType,
+    });
+
     await this.notiRepository.update(
       { id: content.id },
       {
-        idType: content.idType,
-        note: content.note,
+        type: typeNoti,
+        content: content.content,
       },
     );
     return this.notiRepository.findOne({ where: { id: content.id } });
