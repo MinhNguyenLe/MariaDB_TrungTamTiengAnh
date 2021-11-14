@@ -1,16 +1,17 @@
-import { ClassRoomEntity } from 'src/NonModule/entity/ClassRoom.entity';
+import { classes } from './class.interface';
+import { classRoom } from './classRoom.interface';
 export interface timeTable {
   id: number;
-  classes: number;
-  classroom: ClassRoomEntity;
+  classes: classes;
+  classroom: classRoom;
   begin: number;
   end: number;
   createdAt: Date;
 }
 
 export interface createTimeTable {
-  classes: number;
-  classroom: number;
+  classes: classes;
+  classroom: classRoom;
   begin: number;
   end: number;
 }

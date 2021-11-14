@@ -19,8 +19,9 @@ export interface editClassRoom {
   address: string;
 }
 
-export interface editTimeTableRoom {
+export interface addTimeTableRoom {
   id: number;
+  idClass: number;
   timetable: timeTableSort[];
 }
 export interface deleteTimeTableRoom {

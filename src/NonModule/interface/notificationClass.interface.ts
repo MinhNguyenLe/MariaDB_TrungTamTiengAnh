@@ -1,19 +1,24 @@
+import { classes } from './class.interface';
+import { commentType } from './comment.interface';
+import { notificationType } from './notificationType.interface';
+
 export interface notificationClass {
   id: number;
-  idType: number;
-  note: string;
-  idComment: number[];
-  idClass: number;
+  type: notificationType;
+  content: string;
+  comment: commentType[];
+  classes: classes;
+  createdAt: Date;
 }
 
 export interface newNotificationClass {
   idType: number;
-  note: string;
+  content: string;
   idClass: number;
 }
 
 export interface editNotificationClass {
   id: number;
   idType: number;
-  note: string;
+  content: string;
 }

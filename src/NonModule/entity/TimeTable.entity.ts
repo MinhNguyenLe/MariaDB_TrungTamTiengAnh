@@ -1,14 +1,15 @@
 import { timeTable } from './../interface/timeTable.interface';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { ClassRoomEntity } from './ClassRoom.entity';
+import { ClassEntity } from './Class.entity';
 
 @Entity('timetable')
 export class TimeTableEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ default: 0 })
-  classes: number;
+  @ManyToOne(() => ClassEntity, (classes: ClassEntity) => classes.timetable)
+  classes: ClassEntity;
 
   @ManyToOne(
     () => ClassRoomEntity,

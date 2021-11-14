@@ -24,7 +24,7 @@ export class CourseEntity {
   @Column({ default: 0 })
   members: number;
 
-  @OneToMany(() => ClassEntity, (classes: ClassEntity) => classes.courses)
+  @OneToMany(() => ClassEntity, (classes: ClassEntity) => classes.course)
   classes: ClassEntity[];
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })

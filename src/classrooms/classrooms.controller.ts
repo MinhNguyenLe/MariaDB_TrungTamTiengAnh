@@ -3,7 +3,7 @@ import customStatusCode from 'src/NonModule/customStatusCode';
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import {
   classRoom,
-  editTimeTableRoom,
+  addTimeTableRoom,
   editClassRoom,
   newClassRoom,
   deleteTimeTableRoom,
@@ -30,7 +30,7 @@ export class ClassroomsController {
   }
 
   @Post('/edit-timetable')
-  editTimeTable(@Body('content') content: editTimeTableRoom) {
+  editTimeTable(@Body('content') content: addTimeTableRoom) {
     content.timetable.forEach((time) => {
       // if (time.length != 10)
       //   customStatusCode('NOT_ACCEPTABLE', 'Format for timetable incorrect!');

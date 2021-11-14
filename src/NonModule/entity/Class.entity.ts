@@ -1,5 +1,14 @@
+import { NotificationClassEntity } from 'src/NonModule/entity/NotificationClass.entity';
 import { CourseEntity } from 'src/NonModule/entity/Course.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { TimeTableEntity } from './TimeTable.entity';
 
 @Entity('class')
 export class ClassEntity {
@@ -9,14 +18,20 @@ export class ClassEntity {
   @Column({ default: '' })
   name: string;
 
-  @Column('int', { array: true, default: [] })
-  idNoti: number[];
+  @OneToMany(
+    () => NotificationClassEntity,
+    (noti: NotificationClassEntity) => noti.classes,
+  )
+  noti: NotificationClassEntity[];
 
   @ManyToOne(() => CourseEntity, (course: CourseEntity) => course.classes)
-  courses: CourseEntity;
+  course: CourseEntity;
 
-  @Column({ default: 0 })
-  idRoom: number;
+  @OneToMany(
+    () => TimeTableEntity,
+    (timetable: TimeTableEntity) => timetable.classes,
+  )
+  timetable: TimeTableEntity[];
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;

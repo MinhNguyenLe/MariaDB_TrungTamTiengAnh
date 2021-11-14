@@ -1,21 +1,33 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { ClassEntity } from './Class.entity';
+import { CommentEntity } from './Comment.entity';
+import { NotificationTypeEntity } from 'src/NonModule/entity/NotificationType.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  OneToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity('notification_class')
 export class NotificationClassEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: false })
-  idType: number;
+  @OneToOne(() => NotificationTypeEntity)
+  @JoinColumn()
+  type: NotificationTypeEntity;
 
   @Column({ default: '' })
-  note: string;
+  content: string;
 
-  @Column('int', { array: true, default: [] })
-  idComment: number[];
+  @OneToMany(() => CommentEntity, (comment: CommentEntity) => comment.noti)
+  comment: CommentEntity[];
 
-  @Column({ nullable: false })
-  idClass: number;
+  @ManyToOne(() => ClassEntity, (classes: ClassEntity) => classes.noti)
+  classes: ClassEntity;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
