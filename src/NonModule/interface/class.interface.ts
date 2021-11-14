@@ -5,6 +5,7 @@ import { timeTable } from './timeTable.interface';
 export interface classes {
   id: number;
   name: string;
+  code: string;
   timetable: timeTable[];
   noti: notificationClass[];
   createdAt: Date;
@@ -13,10 +14,11 @@ export interface classes {
 
 export interface newClasses {
   name: string;
-  noti: notificationClass[];
-  course: course;
+  course: number;
+  code: string;
 }
 export interface classesEdit {
   name: string;
   id: number;
+  code: string;
 }
