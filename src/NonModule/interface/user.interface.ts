@@ -17,3 +17,18 @@ export interface user {
   permission: number;
   createdAt: Date;
 }
+
+export interface register {
+  userName: string;
+  password: string;
+  email: string;
+  lastName: string;
+  firstName: string;
+  placeBirth: string;
+  dateBirth: string;
+  phoneNumber: string;
+  address: string;
+  gender: number;
+  nameRole: string;
+  permission: number;
+}
