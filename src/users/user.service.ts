@@ -11,7 +11,8 @@ import * as bcrypt from 'bcrypt';
 import { TeacherEntity } from 'src/NonModule/entity/Teacher.entity';
 import { teacher } from 'src/NonModule/interface/teacher.interface';
 import { AdminEntity } from 'src/NonModule/entity/Admin.entity';
-import { admin } from 'src/NonModule/interface/Admin.interface';
+import { admin } from 'src/NonModule/interface/admin.interface';
+import customStatusCode from 'src/NonModule/customStatusCode';
 @Injectable()
 export class UsersService {
   constructor(
@@ -49,7 +50,7 @@ export class UsersService {
 
   async getAllStudent(): Promise<student[]> {
     return this.studentsRepository.find({
-      relations: ['user', 'studentClass'],
+      relations: ['user', 'studentClass', 'studentClass.classes'],
     });
   }
 
@@ -59,6 +60,43 @@ export class UsersService {
 
   async getAllAdmin(): Promise<admin[]> {
     return this.adminRepository.find({ relations: ['user'] });
+  }
+
+  async getCodeClass(role: string, idUser: number): Promise<string[]> {
+    const user = await this.usersRepository.findOne({
+      where: {
+        id: idUser,
+      },
+    });
+    const code = [];
+
+    if (role === 'student') {
+      const student = await this.studentsRepository.findOne({
+        where: {
+          user: user,
+        },
+        relations: ['studentClass', 'studentClass.classes'],
+      });
+      console.log('-------------------', student, '----------------');
+      student.studentClass.forEach((item) => {
+        code.push(item.classes.code);
+      });
+    } else if (role === 'teacher') {
+      const teacher = await this.teacherRepository.findOne({
+        where: {
+          user: user,
+        },
+        relations: ['teacherClass', 'teacherClass.classes'],
+      });
+      console.log('-------------------', teacher, '----------------');
+      teacher.teacherClass.forEach((item) => {
+        code.push(item.classes.code);
+      });
+    } else {
+      customStatusCode('INTERNAL_SERVER_ERROR', 'role is student or teacher');
+    }
+
+    return code;
   }
 
   allUser(): Promise<user[]> {

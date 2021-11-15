@@ -4,6 +4,7 @@ import {
   classesEdit,
   newClasses,
 } from 'src/NonModule/interface/class.interface';
+import { newStudentClass } from 'src/NonModule/interface/studentClass.interface';
 import { ClassesService } from './classes.service';
 
 @Controller('classes')
@@ -23,6 +24,11 @@ export class ClassesController {
   @Post('/edit')
   edit(@Body('content') content: classesEdit) {
     return this.classesService.editClass(content);
+  }
+
+  @Post('/create-student-class')
+  createStudentClass(@Body('content') content: newStudentClass) {
+    return this.classesService.createStudentClass(content);
   }
 
   @Delete(':id')

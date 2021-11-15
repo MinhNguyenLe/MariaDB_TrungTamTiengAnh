@@ -4,6 +4,7 @@ import customStatusCode from 'src/NonModule/customStatusCode';
 import { ClassEntity } from 'src/NonModule/entity/Class.entity';
 import { CourseEntity } from 'src/NonModule/entity/Course.entity';
 import { ScheduleEntity } from 'src/NonModule/entity/Schedule.entity';
+import { StudentEntity } from 'src/NonModule/entity/Student.entity';
 import { StudentClassEntity } from 'src/NonModule/entity/StudentClass.entity';
 import { TeacherClassEntity } from 'src/NonModule/entity/TeacherClass.entity';
 import {
@@ -12,6 +13,10 @@ import {
   newClasses,
 } from 'src/NonModule/interface/class.interface';
 import { course } from 'src/NonModule/interface/course.interface';
+import {
+  newStudentClass,
+  studentClass,
+} from 'src/NonModule/interface/studentClass.interface';
 
 import { Repository } from 'typeorm';
 
@@ -26,6 +31,8 @@ export class ClassesService {
     private scheduleRepository: Repository<ScheduleEntity>,
     @InjectRepository(StudentClassEntity)
     private studentClassRepository: Repository<StudentClassEntity>,
+    @InjectRepository(StudentEntity)
+    private studentRepository: Repository<StudentEntity>,
     @InjectRepository(TeacherClassEntity)
     private teacherClassRepository: Repository<TeacherClassEntity>,
   ) {}
@@ -49,6 +56,30 @@ export class ClassesService {
     });
 
     return this.coursesRepository.find({ relations: ['classes'] });
+  }
+
+  async createStudentClass(content: newStudentClass): Promise<studentClass[]> {
+    const student = await this.studentRepository.findOne({
+      where: {
+        id: content.idStudent,
+      },
+    });
+
+    const classes = await this.classesRepository.findOne({
+      where: {
+        id: content.idClass,
+      },
+    });
+
+    await this.studentClassRepository.save({
+      student: student,
+      classes: classes,
+      isPaid: content.isPaid,
+    });
+
+    return this.studentClassRepository.find({
+      relations: ['classes', 'comment', 'noti', 'student'],
+    });
   }
 
   async editClass(content: classesEdit): Promise<classes> {

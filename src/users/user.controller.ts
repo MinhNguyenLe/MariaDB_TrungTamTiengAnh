@@ -28,6 +28,11 @@ export class UsersController {
     return this.usersService.getAllStudent();
   }
 
+  @Post('/code-class')
+  getCodeClass(@Body('role') role: string, @Body('idUser') idUser: number) {
+    return this.usersService.getCodeClass(role, idUser);
+  }
+
   @Get('/teacher')
   getAllTeacher() {
     return this.usersService.getAllTeacher();
