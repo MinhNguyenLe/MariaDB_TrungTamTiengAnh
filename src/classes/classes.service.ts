@@ -8,6 +8,8 @@ import {
   classesEdit,
   newClasses,
 } from 'src/NonModule/interface/class.interface';
+import { course } from 'src/NonModule/interface/course.interface';
+
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -19,7 +21,7 @@ export class ClassesService {
     private coursesRepository: Repository<CourseEntity>,
   ) {}
 
-  async createClass(content: newClasses): Promise<classes[]> {
+  async createClass(content: newClasses): Promise<course[]> {
     if (!content.course)
       customStatusCode('INTERNAL_SERVER_ERROR', 'id of course must require');
 
@@ -37,7 +39,7 @@ export class ClassesService {
       course: course,
     });
 
-    return this.classesRepository.find();
+    return this.coursesRepository.find({ relations: ['classes'] });
   }
 
   async editClass(content: classesEdit): Promise<classes> {

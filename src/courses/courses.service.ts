@@ -20,7 +20,7 @@ export class CoursesService {
 
   async createCourse(content: newCourse): Promise<course[]> {
     await this.coursesRepository.save(content);
-    return this.coursesRepository.find();
+    return this.coursesRepository.find({ relations: ['classes'] });
   }
 
   async editCourse(content: courseEdit): Promise<course[]> {
@@ -35,7 +35,7 @@ export class CoursesService {
         timeEnd: content.timeEnd,
       },
     );
-    return this.coursesRepository.find();
+    return this.coursesRepository.find({ relations: ['classes'] });
   }
 
   async getById(id: number): Promise<course> {
@@ -47,16 +47,19 @@ export class CoursesService {
   }
 
   async deleteById(id: number): Promise<course[]> {
-    const dataDelete = await this.coursesRepository.findOne({ where: { id } });
+    const dataDelete = await this.coursesRepository.findOne({
+      where: { id },
+      relations: ['classes'],
+    });
 
-    [...dataDelete.classes].forEach(async (item) => {
+    for (const item of [...dataDelete.classes]) {
       await this.classesRepository.delete({
         id: item.id,
       });
-    });
+    }
 
     await this.coursesRepository.delete({ id });
-    return this.coursesRepository.find();
+    return this.coursesRepository.find({ relations: ['classes'] });
   }
 
   async clearRepo(): Promise<course[]> {
