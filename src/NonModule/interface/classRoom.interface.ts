@@ -20,7 +20,7 @@ export interface editClassRoom {
 }
 
 export interface addTimeTableRoom {
-  id: number;
+  idRoom: number;
   idClass: number;
   timetable: timeTableSort[];
 }

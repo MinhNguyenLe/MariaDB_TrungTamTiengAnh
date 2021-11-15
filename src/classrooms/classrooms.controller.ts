@@ -29,14 +29,14 @@ export class ClassroomsController {
     return this.classroomsService.editInfor(content);
   }
 
-  @Post('/edit-timetable')
-  editTimeTable(@Body('content') content: addTimeTableRoom) {
+  @Post('/create-timetable')
+  addTimeTable(@Body('content') content: addTimeTableRoom) {
     content.timetable.forEach((time) => {
       // if (time.length != 10)
       //   customStatusCode('NOT_ACCEPTABLE', 'Format for timetable incorrect!');
     });
 
-    return this.classroomsService.editTimeTable(content);
+    return this.classroomsService.addTimeTable(content);
   }
 
   @Delete('/delete-timetable')

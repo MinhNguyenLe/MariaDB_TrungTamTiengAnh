@@ -9,7 +9,7 @@ import {
 } from 'src/NonModule/interface/notificationType.interface';
 import { NotiTypesService } from './noti-types.service';
 
-@Controller('noti-types')
+@Controller('noti-type')
 export class NotiTypesController {
   constructor(private readonly notiTypesService: NotiTypesService) {}
 

@@ -48,7 +48,7 @@ const check = (befArr, aftArr) => {
     acceptArr.forEach((element) => {
       result.push(element);
     });
-
+    console.log('--------------', result);
     return result;
   }
 
@@ -84,6 +84,7 @@ const check = (befArr, aftArr) => {
     }
   }
 
+  console.log('--------------', result);
   return result;
 };
 

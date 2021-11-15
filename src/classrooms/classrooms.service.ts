@@ -32,7 +32,7 @@ export class ClassroomsService {
   }
 
   async getAll(): Promise<classRoom[]> {
-    return this.classroomsRepository.find();
+    return this.classroomsRepository.find({ relations: ['timetable'] });
   }
 
   async deleteById(id: number): Promise<classRoom[]> {
@@ -50,7 +50,7 @@ export class ClassroomsService {
   async create(content: newClassRoom): Promise<classRoom[]> {
     await this.classroomsRepository.save(content);
 
-    return this.classroomsRepository.find();
+    return this.classroomsRepository.find({ relations: ['timetable'] });
   }
 
   async editInfor(content: editClassRoom): Promise<classRoom> {
@@ -64,12 +64,14 @@ export class ClassroomsService {
     return this.classroomsRepository.findOne({ where: { id: content.id } });
   }
 
-  async editTimeTable(content: addTimeTableRoom): Promise<classRoom> {
+  async addTimeTable(content: addTimeTableRoom): Promise<classRoom> {
     const { check, sortArr } = useCheckTimeTableRoom();
 
     const classroom = await this.classroomsRepository.findOne({
-      where: { id: content.id },
+      where: { id: content.idRoom },
+      relations: ['timetable'],
     });
+
     const classes = await this.classRepository.findOne({
       where: { id: content.idClass },
     });
@@ -87,34 +89,7 @@ export class ClassroomsService {
       accept.push(newItem);
     }
 
-    // update timetable for classroom and class
-    const newTTRoom = [...accept],
-      newTTClass = [...accept];
-
-    classroom.timetable.forEach((item) => {
-      newTTRoom.push(item);
-    });
-
-    classes.timetable.forEach((item) => {
-      newTTClass.push(item);
-    });
-
-    // sort with begin and save to entity
-    await this.classroomsRepository.update(
-      { id: content.id },
-      {
-        timetable: sortArr(newTTRoom),
-      },
-    );
-
-    await this.classRepository.update(
-      { id: content.idClass },
-      {
-        timetable: sortArr(newTTClass),
-      },
-    );
-
-    return this.classroomsRepository.findOne({ where: { id: content.id } });
+    return this.classroomsRepository.findOne({ where: { id: content.idRoom } });
   }
 
   async deleteTimeTable(content: deleteTimeTableRoom): Promise<classRoom> {
