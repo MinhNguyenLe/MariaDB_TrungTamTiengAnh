@@ -26,10 +26,6 @@ export class UsersController {
   deleteUserById(@Body('id') id: number) {
     return this.usersService.deleteUserByID(id);
   }
-  @Get('/students')
-  findAllStudent() {
-    return this.usersService.allStudent();
-  }
 
   @Post('/register')
   register(@Body('account') account: user) {

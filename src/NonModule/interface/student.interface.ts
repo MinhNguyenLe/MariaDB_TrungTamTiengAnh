@@ -1,8 +1,11 @@
+import { studentClass } from './studentClass.interface';
 import { user } from './user.interface';
 
 export interface student {
-  // user: user;
   id: number;
-  isPaid: boolean;
-  // classId: [number];
+  user: user;
+  education: string;
+  level: string;
+  studentClass: studentClass[];
+  createdAt: Date;
 }

@@ -3,11 +3,16 @@ import { InjectRepository } from '@nestjs/typeorm';
 import customStatusCode from 'src/NonModule/customStatusCode';
 import { ClassEntity } from 'src/NonModule/entity/Class.entity';
 import { CourseEntity } from 'src/NonModule/entity/Course.entity';
+import { ScheduleEntity } from 'src/NonModule/entity/Schedule.entity';
+import { StudentClassEntity } from 'src/NonModule/entity/StudentClass.entity';
+import { TeacherClassEntity } from 'src/NonModule/entity/TeacherClass.entity';
 import {
   classes,
   classesEdit,
   newClasses,
 } from 'src/NonModule/interface/class.interface';
+import { course } from 'src/NonModule/interface/course.interface';
+
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -17,9 +22,15 @@ export class ClassesService {
     private classesRepository: Repository<ClassEntity>,
     @InjectRepository(CourseEntity)
     private coursesRepository: Repository<CourseEntity>,
+    @InjectRepository(ScheduleEntity)
+    private scheduleRepository: Repository<ScheduleEntity>,
+    @InjectRepository(StudentClassEntity)
+    private studentClassRepository: Repository<StudentClassEntity>,
+    @InjectRepository(TeacherClassEntity)
+    private teacherClassRepository: Repository<TeacherClassEntity>,
   ) {}
 
-  async createClass(content: newClasses): Promise<classes[]> {
+  async createClass(content: newClasses): Promise<course[]> {
     if (!content.course)
       customStatusCode('INTERNAL_SERVER_ERROR', 'id of course must require');
 
@@ -37,7 +48,7 @@ export class ClassesService {
       course: course,
     });
 
-    return this.classesRepository.find();
+    return this.coursesRepository.find({ relations: ['classes'] });
   }
 
   async editClass(content: classesEdit): Promise<classes> {

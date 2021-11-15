@@ -1,15 +1,19 @@
 import { course } from './course.interface';
 import { notificationClass } from './notificationClass.interface';
+import { studentClass } from './studentClass.interface';
+import { teacherClass } from './teacherClass.interface';
 import { timeTable } from './timeTable.interface';
 
 export interface classes {
   id: number;
   name: string;
   code: string;
-  timetable: timeTable[];
   noti: notificationClass[];
-  createdAt: Date;
+  studentClass: studentClass[];
+  teacherClass: teacherClass[];
   course: course;
+  timetable: timeTable[];
+  createdAt: Date;
 }
 
 export interface newClasses {

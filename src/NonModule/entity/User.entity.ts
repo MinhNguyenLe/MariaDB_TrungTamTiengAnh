@@ -1,4 +1,12 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { RoleEntity } from './Role.entity';
+import { ScheduleEntity } from './Schedule.entity';
 
 @Entity('user')
 export class UserEntity {
@@ -35,51 +43,14 @@ export class UserEntity {
   @Column({ default: 0 }) // 0 : nu 1 : nam
   gender: number;
 
-  @Column()
-  roleId: number;
+  @OneToOne(() => RoleEntity)
+  @JoinColumn()
+  role: RoleEntity;
+
+  @OneToOne(() => ScheduleEntity)
+  @JoinColumn()
+  schedule: ScheduleEntity;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 }
-
-// @Entity('student_class')
-// export class StudentEntity {
-//   @PrimaryGeneratedColumn()
-//   id: number;
-
-//   @Column()
-//   idUser: number;
-
-//   @Column()
-//   classId: [number];
-
-//   @Column()
-//   isPaid: boolean;
-
-//   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-//   createdAt: Date;
-// }
-
-// @Entity('teacher')
-// export class TeacherEntity {
-//   @PrimaryGeneratedColumn()
-//   id: number;
-
-//   @Column()
-//   idUser: number;
-
-//   @Column()
-//   classId: [number];
-
-//   @Column()
-//   wage: number;
-
-//   @Column()
-//   workTime: number;
-
-//   @Column()
-//   subWage: number;
-
-//   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-//   createdAt: Date;
-// }

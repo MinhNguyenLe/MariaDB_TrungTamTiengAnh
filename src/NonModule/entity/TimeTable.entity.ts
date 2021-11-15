@@ -8,12 +8,15 @@ export class TimeTableEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => ClassEntity, (classes: ClassEntity) => classes.timetable)
+  @ManyToOne(() => ClassEntity, (classes: ClassEntity) => classes.timetable, {
+    onDelete: 'CASCADE',
+  })
   classes: ClassEntity;
 
   @ManyToOne(
     () => ClassRoomEntity,
     (classroom: ClassRoomEntity) => classroom.timetable,
+    { onDelete: 'CASCADE' },
   )
   classroom: ClassRoomEntity;
 
