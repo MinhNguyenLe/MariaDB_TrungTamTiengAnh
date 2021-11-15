@@ -102,7 +102,15 @@ export class ClassesService {
   }
 
   async getAll(): Promise<classes[]> {
-    return this.classesRepository.find();
+    return this.classesRepository.find({
+      relations: [
+        'noti',
+        'studentClass',
+        'teacherClass',
+        'course',
+        'timetable',
+      ],
+    });
   }
 
   async clearRepo(): Promise<classes[]> {

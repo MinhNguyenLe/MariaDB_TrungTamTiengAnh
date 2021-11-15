@@ -38,21 +38,11 @@ export class NotisService {
       id: content.idType,
     });
 
-    const newNoti = await this.notiRepository.save({
+    await this.notiRepository.save({
       type: typeNoti,
       classes: classes,
       content: content.content,
     });
-
-    const arrNoti = [...classes.noti];
-    arrNoti.push(newNoti);
-
-    await this.classesRepository.update(
-      { id: content.idClass },
-      {
-        noti: arrNoti,
-      },
-    );
 
     return this.notiRepository.find({
       relations: ['studentClass', 'teacherClass', 'type', 'comment', 'classes'],

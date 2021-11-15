@@ -6,7 +6,7 @@ import {
 } from 'src/NonModule/interface/notificationClass.interface';
 import { NotisService } from './notis.service';
 
-@Controller('notis')
+@Controller('noti')
 export class NotisController {
   constructor(private readonly notisService: NotisService) {}
 
