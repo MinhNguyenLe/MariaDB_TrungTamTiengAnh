@@ -21,6 +21,11 @@ export class ClassesController {
     return this.classesService.getAll();
   }
 
+  @Get(':code')
+  getByCode(@Param('code') code: string) {
+    return this.classesService.getByCode(code);
+  }
+
   @Post('/edit')
   edit(@Body('content') content: classesEdit) {
     return this.classesService.editClass(content);

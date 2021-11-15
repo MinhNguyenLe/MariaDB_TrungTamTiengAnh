@@ -98,7 +98,29 @@ export class ClassesService {
   }
 
   async getById(id: number): Promise<classes[]> {
-    return this.classesRepository.find({ where: { id } });
+    return this.classesRepository.find({
+      where: { id },
+      relations: [
+        'noti',
+        'studentClass',
+        'teacherClass',
+        'course',
+        'timetable',
+      ],
+    });
+  }
+
+  async getByCode(code: string): Promise<classes> {
+    return this.classesRepository.findOne({
+      where: { code: code },
+      relations: [
+        'noti',
+        'studentClass',
+        'teacherClass',
+        'course',
+        'timetable',
+      ],
+    });
   }
 
   async getAll(): Promise<classes[]> {
