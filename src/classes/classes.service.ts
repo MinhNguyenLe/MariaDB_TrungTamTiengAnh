@@ -3,6 +3,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import customStatusCode from 'src/NonModule/customStatusCode';
 import { ClassEntity } from 'src/NonModule/entity/Class.entity';
 import { CourseEntity } from 'src/NonModule/entity/Course.entity';
+import { ScheduleEntity } from 'src/NonModule/entity/Schedule.entity';
+import { StudentClassEntity } from 'src/NonModule/entity/StudentClass.entity';
+import { TeacherClassEntity } from 'src/NonModule/entity/TeacherClass.entity';
 import {
   classes,
   classesEdit,
@@ -19,6 +22,12 @@ export class ClassesService {
     private classesRepository: Repository<ClassEntity>,
     @InjectRepository(CourseEntity)
     private coursesRepository: Repository<CourseEntity>,
+    @InjectRepository(ScheduleEntity)
+    private scheduleRepository: Repository<ScheduleEntity>,
+    @InjectRepository(StudentClassEntity)
+    private studentClassRepository: Repository<StudentClassEntity>,
+    @InjectRepository(TeacherClassEntity)
+    private teacherClassRepository: Repository<TeacherClassEntity>,
   ) {}
 
   async createClass(content: newClasses): Promise<course[]> {

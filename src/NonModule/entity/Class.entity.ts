@@ -10,6 +10,8 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { TimeTableEntity } from './TimeTable.entity';
+import { StudentClassEntity } from './StudentClass.entity';
+import { TeacherClassEntity } from './TeacherClass.entity';
 
 @Entity('class')
 export class ClassEntity {
@@ -27,6 +29,18 @@ export class ClassEntity {
     (noti: NotificationClassEntity) => noti.classes,
   )
   noti: NotificationClassEntity[];
+
+  @OneToMany(
+    () => StudentClassEntity,
+    (studentClass: StudentClassEntity) => studentClass.classes,
+  )
+  studentClass: StudentClassEntity[];
+
+  @OneToMany(
+    () => TeacherClassEntity,
+    (teacherClass: TeacherClassEntity) => teacherClass.classes,
+  )
+  teacherClass: TeacherClassEntity[];
 
   @ManyToOne(() => CourseEntity, (course: CourseEntity) => course.classes)
   @JoinColumn()

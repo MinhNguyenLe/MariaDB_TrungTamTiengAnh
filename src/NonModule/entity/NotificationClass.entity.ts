@@ -10,6 +10,8 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { StudentClassEntity } from './StudentClass.entity';
+import { TeacherClassEntity } from './TeacherClass.entity';
 
 @Entity('notification_class')
 export class NotificationClassEntity {
@@ -22,6 +24,18 @@ export class NotificationClassEntity {
 
   @Column({ default: '' })
   content: string;
+
+  @ManyToOne(
+    () => StudentClassEntity,
+    (studentClass: StudentClassEntity) => studentClass.noti,
+  )
+  studentClass: StudentClassEntity;
+
+  @ManyToOne(
+    () => TeacherClassEntity,
+    (teacherClass: TeacherClassEntity) => teacherClass.noti,
+  )
+  teacherClass: TeacherClassEntity;
 
   @OneToMany(() => CommentEntity, (comment: CommentEntity) => comment.noti)
   comment: CommentEntity[];

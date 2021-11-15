@@ -8,6 +8,8 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { StudentClassEntity } from './StudentClass.entity';
+import { TeacherClassEntity } from './TeacherClass.entity';
 
 @Entity('comment')
 export class CommentEntity {
@@ -17,9 +19,17 @@ export class CommentEntity {
   @Column()
   content: string;
 
-  @OneToOne(() => UserEntity)
-  @JoinColumn()
-  user: UserEntity;
+  @ManyToOne(
+    () => StudentClassEntity,
+    (studentClass: StudentClassEntity) => studentClass.comment,
+  )
+  studentClass: StudentClassEntity;
+
+  @ManyToOne(
+    () => TeacherClassEntity,
+    (teacherClass: TeacherClassEntity) => teacherClass.comment,
+  )
+  teacherClass: TeacherClassEntity;
 
   @ManyToOne(
     () => NotificationClassEntity,

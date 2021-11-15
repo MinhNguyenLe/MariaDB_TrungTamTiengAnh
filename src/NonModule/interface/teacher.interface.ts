@@ -1,10 +1,11 @@
+import { teacherClass } from './teacherClass.interface';
 import { user } from './user.interface';
 
 export interface teacher {
   user: user;
   id: number;
-  wage: number;
-  subWage: number;
-  workTime: number;
-  classId: [number];
+  level: string;
+  certificate: string;
+  teacherClass: teacherClass[];
+  createdAt: Date;
 }

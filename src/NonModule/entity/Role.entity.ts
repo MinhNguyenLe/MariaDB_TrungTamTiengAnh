@@ -5,6 +5,12 @@ export class RoleEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column({ default: false })
+  isPermission: boolean;
+
+  @Column({ default: '' })
+  name: string;
+
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 }

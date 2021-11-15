@@ -8,6 +8,8 @@ import { user } from '../NonModule/interface/user.interface';
 import { Repository } from 'typeorm';
 import { Console, log } from 'console';
 import * as bcrypt from 'bcrypt';
+import { RoleEntity } from 'src/NonModule/entity/Role.entity';
+import { TeacherEntity } from 'src/NonModule/entity/Teacher.entity';
 @Injectable()
 export class UsersService {
   constructor(
@@ -15,16 +17,18 @@ export class UsersService {
     private usersRepository: Repository<UserEntity>,
     @InjectRepository(StudentEntity)
     private studentsRepository: Repository<StudentEntity>,
+    @InjectRepository(TeacherEntity)
+    private teacherRepository: Repository<TeacherEntity>,
+    @InjectRepository(RoleEntity)
+    private roleRepository: Repository<RoleEntity>,
   ) {}
 
   async registerStudent(account: user): Promise<user> {
     const salt = await bcrypt.genSalt();
     account.password = await bcrypt.hash(account.password, salt);
-    await this.usersRepository.save(account);
+    const user = await this.usersRepository.save(account);
     await this.studentsRepository.save({
-      idUser: account.id,
-      isPaid: false,
-      // classId: [],
+      user: user,
     });
     return account;
   }
@@ -33,9 +37,6 @@ export class UsersService {
     return this.usersRepository.find();
   }
 
-  allStudent(): Promise<student[]> {
-    return this.studentsRepository.find();
-  }
   async findOne(username: string): Promise<user | undefined> {
     return this.usersRepository.findOne({
       where: {
@@ -50,6 +51,6 @@ export class UsersService {
 
   async clearRepo(): Promise<user[]> {
     await this.usersRepository.clear();
-    return await this.usersRepository.find();
+    return this.usersRepository.find();
   }
 }

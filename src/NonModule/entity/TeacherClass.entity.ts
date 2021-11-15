@@ -1,9 +1,46 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  ManyToOne,
+} from 'typeorm';
+import { ClassEntity } from './Class.entity';
+import { CommentEntity } from './Comment.entity';
+import { NotificationClassEntity } from './NotificationClass.entity';
+import { TeacherEntity } from './Teacher.entity';
 
 @Entity('teacher_class')
 export class TeacherClassEntity {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column({ default: 0 })
+  wage: number;
+
+  @Column({ default: 0 })
+  bonus: number;
+
+  @ManyToOne(
+    () => TeacherEntity,
+    (teacher: TeacherEntity) => teacher.teacherClass,
+  )
+  teacher: TeacherEntity;
+
+  @OneToMany(
+    () => CommentEntity,
+    (comment: CommentEntity) => comment.teacherClass,
+  )
+  comment: CommentEntity[];
+
+  @OneToMany(
+    () => NotificationClassEntity,
+    (noti: NotificationClassEntity) => noti.teacherClass,
+  )
+  noti: NotificationClassEntity[];
+
+  @ManyToOne(() => ClassEntity, (classes: ClassEntity) => classes.teacherClass)
+  classes: ClassEntity;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;

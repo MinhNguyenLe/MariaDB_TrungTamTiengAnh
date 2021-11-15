@@ -1,3 +1,5 @@
+import { role } from './role.interface';
+
 export interface user {
   id: number;
   userName: string;
@@ -10,5 +12,5 @@ export interface user {
   placeBirth: string;
   gender: number;
   address: string;
-  roleId: number;
+  role: role;
 }
