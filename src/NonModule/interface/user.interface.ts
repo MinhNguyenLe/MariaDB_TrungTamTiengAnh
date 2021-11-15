@@ -1,4 +1,3 @@
-import { role } from './role.interface';
 import { schedule } from './schedule.interface';
 
 export interface user {
@@ -14,6 +13,7 @@ export interface user {
   address: string;
   gender: number;
   schedule: schedule;
-  role: role;
+  nameRole: string;
+  permission: number;
   createdAt: Date;
 }

@@ -8,7 +8,6 @@ import { user } from '../NonModule/interface/user.interface';
 import { Repository } from 'typeorm';
 import { Console, log } from 'console';
 import * as bcrypt from 'bcrypt';
-import { RoleEntity } from 'src/NonModule/entity/Role.entity';
 import { TeacherEntity } from 'src/NonModule/entity/Teacher.entity';
 @Injectable()
 export class UsersService {
@@ -19,8 +18,6 @@ export class UsersService {
     private studentsRepository: Repository<StudentEntity>,
     @InjectRepository(TeacherEntity)
     private teacherRepository: Repository<TeacherEntity>,
-    @InjectRepository(RoleEntity)
-    private roleRepository: Repository<RoleEntity>,
   ) {}
 
   async registerStudent(account: user): Promise<user> {

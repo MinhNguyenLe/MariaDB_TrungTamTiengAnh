@@ -5,7 +5,6 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { RoleEntity } from './Role.entity';
 import { ScheduleEntity } from './Schedule.entity';
 
 @Entity('user')
@@ -43,9 +42,11 @@ export class UserEntity {
   @Column({ default: 0 }) // 0 : nu 1 : nam
   gender: number;
 
-  @OneToOne(() => RoleEntity)
-  @JoinColumn()
-  role: RoleEntity;
+  @Column({ default: 1 }) // 1 : admin 2 : teacher 3: student
+  permission: number;
+
+  @Column({ default: '' })
+  nameRole: string;
 
   @OneToOne(() => ScheduleEntity)
   @JoinColumn()
