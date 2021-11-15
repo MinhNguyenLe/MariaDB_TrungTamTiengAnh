@@ -6,8 +6,8 @@ export interface course {
   information: string;
   level: string;
   docs: string;
-  members: number;
   tuition: number;
+  members: number;
   classes: classes[];
   timeBegin: Date;
   timeEnd: Date;

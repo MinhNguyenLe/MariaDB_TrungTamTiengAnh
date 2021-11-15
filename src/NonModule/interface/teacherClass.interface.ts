@@ -5,11 +5,11 @@ import { teacher } from './teacher.interface';
 
 export interface teacherClass {
   id: number;
-  teacher: teacher;
   wage: number;
   bonus: number;
-  classes: classes;
+  teacher: teacher;
   comment: commentType[];
   noti: notificationClass[];
+  classes: classes;
   createdAt: Date;
 }

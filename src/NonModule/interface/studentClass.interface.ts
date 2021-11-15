@@ -7,8 +7,8 @@ import { commentType } from './comment.interface';
 export interface studentClass {
   id: number;
   student: student;
-  isPaid: boolean;
   classes: classes;
+  isPaid: boolean;
   comment: commentType[];
   noti: notificationClass[];
   createdAt: Date;

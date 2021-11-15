@@ -8,12 +8,12 @@ export interface classes {
   id: number;
   name: string;
   code: string;
-  timetable: timeTable[];
   noti: notificationClass[];
   studentClass: studentClass[];
   teacherClass: teacherClass[];
-  createdAt: Date;
   course: course;
+  timetable: timeTable[];
+  createdAt: Date;
 }
 
 export interface newClasses {

@@ -42,7 +42,9 @@ export class ClassEntity {
   )
   teacherClass: TeacherClassEntity[];
 
-  @ManyToOne(() => CourseEntity, (course: CourseEntity) => course.classes)
+  @ManyToOne(() => CourseEntity, (course: CourseEntity) => course.classes, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn()
   course: CourseEntity;
 

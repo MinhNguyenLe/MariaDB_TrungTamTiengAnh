@@ -28,19 +28,23 @@ export class NotificationClassEntity {
   @ManyToOne(
     () => StudentClassEntity,
     (studentClass: StudentClassEntity) => studentClass.noti,
+    { onDelete: 'CASCADE' },
   )
   studentClass: StudentClassEntity;
 
   @ManyToOne(
     () => TeacherClassEntity,
     (teacherClass: TeacherClassEntity) => teacherClass.noti,
+    { onDelete: 'CASCADE' },
   )
   teacherClass: TeacherClassEntity;
 
   @OneToMany(() => CommentEntity, (comment: CommentEntity) => comment.noti)
   comment: CommentEntity[];
 
-  @ManyToOne(() => ClassEntity, (classes: ClassEntity) => classes.noti)
+  @ManyToOne(() => ClassEntity, (classes: ClassEntity) => classes.noti, {
+    onDelete: 'CASCADE',
+  })
   classes: ClassEntity;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })

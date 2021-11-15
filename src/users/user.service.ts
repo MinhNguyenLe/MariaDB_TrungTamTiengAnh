@@ -30,11 +30,11 @@ export class UsersService {
     await this.studentsRepository.save({
       user: user,
     });
-    return account;
+    return user;
   }
 
   allUser(): Promise<user[]> {
-    return this.usersRepository.find();
+    return this.usersRepository.find({ relations: ['schedule', 'role'] });
   }
 
   async findOne(username: string): Promise<user | undefined> {

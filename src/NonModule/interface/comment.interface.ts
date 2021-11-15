@@ -6,8 +6,8 @@ import { user } from './user.interface';
 export interface commentType {
   id: number;
   content: string;
-  noti: notificationClass;
   studentClass: studentClass;
   teacherClass: teacherClass;
+  noti: notificationClass;
   createdAt: Date;
 }

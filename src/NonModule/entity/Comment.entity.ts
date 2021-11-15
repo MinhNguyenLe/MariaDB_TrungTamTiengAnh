@@ -22,18 +22,21 @@ export class CommentEntity {
   @ManyToOne(
     () => StudentClassEntity,
     (studentClass: StudentClassEntity) => studentClass.comment,
+    { onDelete: 'CASCADE' },
   )
   studentClass: StudentClassEntity;
 
   @ManyToOne(
     () => TeacherClassEntity,
     (teacherClass: TeacherClassEntity) => teacherClass.comment,
+    { onDelete: 'CASCADE' },
   )
   teacherClass: TeacherClassEntity;
 
   @ManyToOne(
     () => NotificationClassEntity,
     (noti: NotificationClassEntity) => noti.comment,
+    { onDelete: 'CASCADE' },
   )
   noti: NotificationClassEntity;
 

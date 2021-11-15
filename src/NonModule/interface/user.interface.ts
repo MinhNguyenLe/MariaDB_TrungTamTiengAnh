@@ -1,16 +1,19 @@
 import { role } from './role.interface';
+import { schedule } from './schedule.interface';
 
 export interface user {
   id: number;
   userName: string;
   password: string;
-  phoneNumber: string;
   email: string;
-  firstName: string;
   lastName: string;
-  dateBirth: string;
+  firstName: string;
   placeBirth: string;
-  gender: number;
+  dateBirth: string;
+  phoneNumber: string;
   address: string;
+  gender: number;
+  schedule: schedule;
   role: role;
+  createdAt: Date;
 }

@@ -24,6 +24,7 @@ export class TeacherClassEntity {
   @ManyToOne(
     () => TeacherEntity,
     (teacher: TeacherEntity) => teacher.teacherClass,
+    { onDelete: 'CASCADE' },
   )
   teacher: TeacherEntity;
 
@@ -39,7 +40,11 @@ export class TeacherClassEntity {
   )
   noti: NotificationClassEntity[];
 
-  @ManyToOne(() => ClassEntity, (classes: ClassEntity) => classes.teacherClass)
+  @ManyToOne(
+    () => ClassEntity,
+    (classes: ClassEntity) => classes.teacherClass,
+    { onDelete: 'CASCADE' },
+  )
   classes: ClassEntity;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })

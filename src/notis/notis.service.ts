@@ -54,7 +54,9 @@ export class NotisService {
       },
     );
 
-    return this.notiRepository.find();
+    return this.notiRepository.find({
+      relations: ['studentClass', 'teacherClass', 'type', 'comment', 'classes'],
+    });
   }
 
   async edit(content: editNotificationClass): Promise<notificationClass> {
@@ -87,6 +89,6 @@ export class NotisService {
 
   async clearRepo(): Promise<notificationClass[]> {
     await this.notiRepository.clear();
-    return await this.notiRepository.find();
+    return this.notiRepository.find();
   }
 }

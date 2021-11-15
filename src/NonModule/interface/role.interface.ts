@@ -1,6 +1,6 @@
 export interface role {
   id: number;
-  name: string;
   isPermission: boolean;
+  name: string;
   createdAt: Date;
 }

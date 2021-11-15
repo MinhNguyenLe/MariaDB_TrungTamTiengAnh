@@ -50,6 +50,6 @@ export class ReviewsService {
 
   async clearRepo(): Promise<review[]> {
     await this.reviewsRepository.clear();
-    return await this.reviewsRepository.find();
+    return this.reviewsRepository.find();
   }
 }

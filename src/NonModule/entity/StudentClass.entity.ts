@@ -18,10 +18,15 @@ export class StudentClassEntity {
   @ManyToOne(
     () => StudentEntity,
     (student: StudentEntity) => student.studentClass,
+    { onDelete: 'CASCADE' },
   )
   student: StudentEntity;
 
-  @ManyToOne(() => ClassEntity, (classes: ClassEntity) => classes.studentClass)
+  @ManyToOne(
+    () => ClassEntity,
+    (classes: ClassEntity) => classes.studentClass,
+    { onDelete: 'CASCADE' },
+  )
   classes: ClassEntity;
 
   @Column({ default: false })
