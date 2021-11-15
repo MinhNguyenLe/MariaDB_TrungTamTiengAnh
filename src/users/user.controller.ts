@@ -33,6 +33,11 @@ export class UsersController {
     return this.usersService.getAllTeacher();
   }
 
+  @Get('/admin')
+  getAllAdmin() {
+    return this.usersService.getAllAdmin();
+  }
+
   @Delete()
   deleteUserById(@Body('id') id: number) {
     return this.usersService.deleteUserByID(id);

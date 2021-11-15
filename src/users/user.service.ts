@@ -11,6 +11,7 @@ import * as bcrypt from 'bcrypt';
 import { TeacherEntity } from 'src/NonModule/entity/Teacher.entity';
 import { teacher } from 'src/NonModule/interface/teacher.interface';
 import { AdminEntity } from 'src/NonModule/entity/Admin.entity';
+import { admin } from 'src/NonModule/interface/Admin.interface';
 @Injectable()
 export class UsersService {
   constructor(
@@ -54,6 +55,10 @@ export class UsersService {
 
   async getAllTeacher(): Promise<teacher[]> {
     return this.teacherRepository.find({ relations: ['user', 'teacherClass'] });
+  }
+
+  async getAllAdmin(): Promise<admin[]> {
+    return this.adminRepository.find({ relations: ['user'] });
   }
 
   allUser(): Promise<user[]> {
