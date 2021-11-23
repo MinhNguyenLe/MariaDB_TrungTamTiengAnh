@@ -33,6 +33,8 @@ export class CoursesService {
         tuition: content.tuition,
         timeBegin: content.timeBegin,
         timeEnd: content.timeEnd,
+        level: content.level,
+        docs: content.docs,
       },
     );
     return this.coursesRepository.find({ relations: ['classes'] });
