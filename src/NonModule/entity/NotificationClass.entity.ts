@@ -18,7 +18,11 @@ export class NotificationClassEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToOne(() => NotificationTypeEntity)
+  @ManyToOne(
+    () => NotificationTypeEntity,
+    (type: NotificationTypeEntity) => type.noti,
+    { onDelete: 'CASCADE' },
+  )
   @JoinColumn()
   type: NotificationTypeEntity;
 
