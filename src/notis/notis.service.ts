@@ -30,6 +30,8 @@ export class NotisService {
   ) {}
 
   async create(content: newNotificationClass): Promise<notificationClass[]> {
+    console.log(content);
+
     const classes = await this.classesRepository.findOne({
       id: content.idClass,
     });
@@ -37,6 +39,8 @@ export class NotisService {
     const typeNoti = await this.notiTypeRepository.findOne({
       id: content.idType,
     });
+
+    console.log(classes, typeNoti);
 
     await this.notiRepository.save({
       type: typeNoti,

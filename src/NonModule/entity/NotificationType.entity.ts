@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { NotificationClassEntity } from './NotificationClass.entity';
 
 @Entity('notification_type')
 export class NotificationTypeEntity {
@@ -7,6 +8,12 @@ export class NotificationTypeEntity {
 
   @Column({ default: '' })
   name: string;
+
+  @OneToMany(
+    () => NotificationClassEntity,
+    (noti: NotificationClassEntity) => noti.type,
+  )
+  noti: NotificationClassEntity[];
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
