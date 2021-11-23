@@ -36,15 +36,15 @@ export class ClassroomsService {
   }
 
   async deleteById(id: number): Promise<classRoom[]> {
-    const dataDelete = await this.classroomsRepository.findOne({ id });
-    [...dataDelete.timetable].forEach(async (item) => {
-      await this.timetableRepository.delete({
-        id: item.id,
-      });
-    });
+    // const dataDelete = await this.classroomsRepository.findOne({ id });
+    // [...dataDelete.timetable].forEach(async (item) => {
+    //   await this.timetableRepository.delete({
+    //     id: item.id,
+    //   });
+    // });
 
     await this.classroomsRepository.delete({ id });
-    return this.classroomsRepository.find();
+    return this.classroomsRepository.find({ relations: ['timetable'] });
   }
 
   async create(content: newClassRoom): Promise<classRoom[]> {

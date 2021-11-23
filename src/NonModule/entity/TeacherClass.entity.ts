@@ -21,6 +21,9 @@ export class TeacherClassEntity {
   @Column({ default: 0 })
   bonus: number;
 
+  @Column({ default: false })
+  isPaid: boolean;
+
   @ManyToOne(
     () => TeacherEntity,
     (teacher: TeacherEntity) => teacher.teacherClass,

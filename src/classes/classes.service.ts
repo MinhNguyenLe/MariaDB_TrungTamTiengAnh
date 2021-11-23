@@ -6,6 +6,7 @@ import { CourseEntity } from 'src/NonModule/entity/Course.entity';
 import { ScheduleEntity } from 'src/NonModule/entity/Schedule.entity';
 import { StudentEntity } from 'src/NonModule/entity/Student.entity';
 import { StudentClassEntity } from 'src/NonModule/entity/StudentClass.entity';
+import { TeacherEntity } from 'src/NonModule/entity/Teacher.entity';
 import { TeacherClassEntity } from 'src/NonModule/entity/TeacherClass.entity';
 import {
   classes,
@@ -17,6 +18,10 @@ import {
   newStudentClass,
   studentClass,
 } from 'src/NonModule/interface/studentClass.interface';
+import {
+  newTeacherClass,
+  teacherClass,
+} from 'src/NonModule/interface/teacherClass.interface';
 
 import { Repository } from 'typeorm';
 
@@ -35,6 +40,8 @@ export class ClassesService {
     private studentRepository: Repository<StudentEntity>,
     @InjectRepository(TeacherClassEntity)
     private teacherClassRepository: Repository<TeacherClassEntity>,
+    @InjectRepository(TeacherEntity)
+    private teacherRepository: Repository<TeacherEntity>,
   ) {}
 
   async createClass(content: newClasses): Promise<course[]> {
@@ -78,7 +85,61 @@ export class ClassesService {
     });
 
     return this.studentClassRepository.find({
+      where: { classes: classes },
       relations: ['classes', 'comment', 'noti', 'student'],
+    });
+  }
+
+  async createTeacherClass(content: newTeacherClass): Promise<teacherClass[]> {
+    const teacher = await this.teacherRepository.findOne({
+      where: {
+        id: content.idStudent,
+      },
+    });
+
+    const classes = await this.classesRepository.findOne({
+      where: {
+        id: content.idClass,
+      },
+    });
+
+    await this.studentClassRepository.save({
+      teacher: teacher,
+      classes: classes,
+      isPaid: content.isPaid,
+      wage: content.wage,
+      bonus: content.bonus,
+    });
+
+    return this.teacherClassRepository.find({
+      where: { classes: classes },
+      relations: ['classes', 'comment', 'noti', 'teacher'],
+    });
+  }
+
+  async getAllStudentClass(code: string): Promise<studentClass[]> {
+    const classes = await this.classesRepository.findOne({
+      where: {
+        code: code,
+      },
+    });
+
+    return this.studentClassRepository.find({
+      where: { classes: classes },
+      relations: ['classes', 'comment', 'noti', 'student'],
+    });
+  }
+
+  async getAllTeacherClass(code: string): Promise<teacherClass[]> {
+    const classes = await this.classesRepository.findOne({
+      where: {
+        code: code,
+      },
+    });
+
+    return this.teacherClassRepository.find({
+      where: { classes: classes },
+      relations: ['classes', 'comment', 'noti', 'teacher'],
     });
   }
 
@@ -131,6 +192,7 @@ export class ClassesService {
         'teacherClass',
         'course',
         'timetable',
+        'timetable.classroom',
       ],
     });
   }
