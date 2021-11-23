@@ -1,3 +1,4 @@
+import { time } from 'console';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import customStatusCode from 'src/NonModule/customStatusCode';
@@ -22,6 +23,8 @@ import {
   newTeacherClass,
   teacherClass,
 } from 'src/NonModule/interface/teacherClass.interface';
+
+import { useCheckTimeTableRoom } from 'src/NonModule/customHook/useCheckTimeTableRoom';
 
 import { Repository } from 'typeorm';
 
@@ -66,17 +69,41 @@ export class ClassesService {
   }
 
   async createStudentClass(content: newStudentClass): Promise<studentClass[]> {
+    const { check, sortArr } = useCheckTimeTableRoom();
+
     const student = await this.studentRepository.findOne({
       where: {
         id: content.idStudent,
       },
+      relations: ['schedule', 'schedule.timetable'],
     });
+
+    const schedule = [];
+    student.schedule.forEach((item) => {
+      schedule.push(item.timetable);
+    });
+    console.log(schedule);
 
     const classes = await this.classesRepository.findOne({
       where: {
         id: content.idClass,
       },
+      relations: ['timetable'],
     });
+    const checked = check(schedule, classes.timetable);
+    if (checked.length !== classes.timetable.length) {
+      customStatusCode(
+        'INTERNAL_SERVER_ERROR',
+        'timetable of this class conflict with timetable student',
+      );
+    } else {
+      for (const item of classes.timetable) {
+        await this.scheduleRepository.save({
+          student: student,
+          timetable: item,
+        });
+      }
+    }
 
     await this.studentClassRepository.save({
       student: student,
@@ -86,24 +113,56 @@ export class ClassesService {
 
     return this.studentClassRepository.find({
       where: { classes: classes },
-      relations: ['classes', 'comment', 'noti', 'student'],
+      relations: [
+        'classes',
+        'comment',
+        'noti',
+        'student',
+        'student.schedule',
+        'student.schedule.timetable',
+      ],
     });
   }
 
   async createTeacherClass(content: newTeacherClass): Promise<teacherClass[]> {
+    const { check, sortArr } = useCheckTimeTableRoom();
+
     const teacher = await this.teacherRepository.findOne({
       where: {
-        id: content.idStudent,
+        id: content.idTeacher,
       },
+      relations: ['schedule', 'schedule.timetable'],
     });
+
+    const schedule = [];
+    teacher.schedule.forEach((item) => {
+      schedule.push(item.timetable);
+    });
+    console.log(schedule);
 
     const classes = await this.classesRepository.findOne({
       where: {
         id: content.idClass,
       },
+      relations: ['timetable'],
     });
 
-    await this.studentClassRepository.save({
+    const checked = check(schedule, classes.timetable);
+    if (checked.length !== classes.timetable.length) {
+      customStatusCode(
+        'INTERNAL_SERVER_ERROR',
+        'timetable of this class conflict with timetable teacher',
+      );
+    } else {
+      for (const item of classes.timetable) {
+        await this.scheduleRepository.save({
+          teacher: teacher,
+          timetable: item,
+        });
+      }
+    }
+
+    await this.teacherClassRepository.save({
       teacher: teacher,
       classes: classes,
       isPaid: content.isPaid,
@@ -113,7 +172,14 @@ export class ClassesService {
 
     return this.teacherClassRepository.find({
       where: { classes: classes },
-      relations: ['classes', 'comment', 'noti', 'teacher'],
+      relations: [
+        'classes',
+        'comment',
+        'noti',
+        'teacher',
+        'teacher.schedule',
+        'teacher.schedule.timetable',
+      ],
     });
   }
 
@@ -127,6 +193,18 @@ export class ClassesService {
     return this.studentClassRepository.find({
       where: { classes: classes },
       relations: ['classes', 'comment', 'noti', 'student'],
+    });
+  }
+
+  async getAllStudentClassEntity(): Promise<studentClass[]> {
+    return this.studentClassRepository.find({
+      relations: ['classes', 'comment', 'noti', 'student'],
+    });
+  }
+
+  async getAllTeacherClassEntity(): Promise<teacherClass[]> {
+    return this.teacherClassRepository.find({
+      relations: ['classes', 'comment', 'noti', 'teacher'],
     });
   }
 
@@ -193,12 +271,19 @@ export class ClassesService {
         'course',
         'timetable',
         'timetable.classroom',
+        'studentClass.student',
+        'studentClass.student.schedule',
+        'studentClass.student.schedule.timetable',
+        'teacherClass.teacher',
+        'teacherClass.teacher.schedule',
+        'teacherClass.teacher.schedule.timetable',
       ],
     });
   }
 
   async clearRepo(): Promise<classes[]> {
-    await this.classesRepository.clear();
+    await this.studentClassRepository.delete({});
+    await this.classesRepository.delete({});
     return this.classesRepository.find();
   }
 }

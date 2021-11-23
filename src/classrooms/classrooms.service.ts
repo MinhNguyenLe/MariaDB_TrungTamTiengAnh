@@ -70,16 +70,13 @@ export class ClassroomsService {
     });
 
     // verify new timetable
-    const accept = [];
     for (const item of check(classroom.timetable, content.timetable)) {
-      const newItem = await this.timetableRepository.save({
+      await this.timetableRepository.save({
         classes: classes,
         classroom: classroom,
         begin: item.begin,
         end: item.end,
       });
-      console.log('new timetable', newItem);
-      accept.push(newItem);
     }
 
     return this.classroomsRepository.findOne({ where: { id: content.idRoom } });

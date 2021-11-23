@@ -73,7 +73,9 @@ export class NotisService {
   }
 
   async getAll(): Promise<notificationClass[]> {
-    return this.notiRepository.find({relations:["classes"]});
+    return this.notiRepository.find({
+      relations: ['classes', 'studentClass', 'teacherClass'],
+    });
   }
 
   async deleteById(id: number): Promise<notificationClass[]> {

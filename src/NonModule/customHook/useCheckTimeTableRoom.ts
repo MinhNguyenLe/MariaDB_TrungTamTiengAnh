@@ -77,7 +77,12 @@ const check = (befArr, aftArr) => {
         /**
          * push begin > end before && push end < after begin
          */
-        if (value.begin >= e.end && value.end <= befArr[index + 1]['begin']) {
+        if (
+          index !== 0 &&
+          index !== befArr.length - 1 &&
+          value.begin >= e.end &&
+          value.end <= befArr[index + 1]['begin']
+        ) {
           result.push(value);
         }
       }
