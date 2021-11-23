@@ -29,6 +29,9 @@ export class NotificationClassEntity {
   @Column({ default: '' })
   content: string;
 
+  @Column({ default: '' })
+  title: string;
+
   @ManyToOne(
     () => StudentClassEntity,
     (studentClass: StudentClassEntity) => studentClass.noti,

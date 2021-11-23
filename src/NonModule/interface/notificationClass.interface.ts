@@ -13,11 +13,13 @@ export interface notificationClass {
   comment: commentType[];
   classes: classes;
   createdAt: Date;
+  title: string;
 }
 
 export interface newNotificationClass {
   idType: number;
   content: string;
+  title: string;
   idClass: number;
 }
 
@@ -25,4 +27,5 @@ export interface editNotificationClass {
   id: number;
   idType: number;
   content: string;
+  title: string;
 }

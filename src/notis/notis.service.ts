@@ -10,6 +10,11 @@ import {
   courseEdit,
 } from 'src/NonModule/interface/course.interface';
 import {
+  classes,
+  classesEdit,
+  newClasses,
+} from 'src/NonModule/interface/class.interface';
+import {
   editNotificationClass,
   newNotificationClass,
   notificationClass,
@@ -29,9 +34,7 @@ export class NotisService {
     private commentRepository: Repository<CommentEntity>,
   ) {}
 
-  async create(content: newNotificationClass): Promise<notificationClass[]> {
-    console.log(content);
-
+  async create(content: newNotificationClass): Promise<classes> {
     const classes = await this.classesRepository.findOne({
       id: content.idClass,
     });
@@ -40,16 +43,31 @@ export class NotisService {
       id: content.idType,
     });
 
-    console.log(classes, typeNoti);
-
     await this.notiRepository.save({
       type: typeNoti,
       classes: classes,
       content: content.content,
+      title: content.title,
     });
 
-    return this.notiRepository.find({
-      relations: ['studentClass', 'teacherClass', 'type', 'comment', 'classes'],
+    return this.classesRepository.findOne({
+      where: { id: content.idClass },
+      relations: [
+        'noti',
+        'studentClass',
+        'teacherClass',
+        'course',
+        'timetable',
+        'timetable.classroom',
+        'studentClass.student',
+        'studentClass.student.schedule',
+        'studentClass.student.user',
+        'teacherClass.teacher.user',
+        'studentClass.student.schedule.timetable',
+        'teacherClass.teacher',
+        'teacherClass.teacher.schedule',
+        'teacherClass.teacher.schedule.timetable',
+      ],
     });
   }
 
@@ -63,6 +81,7 @@ export class NotisService {
       {
         type: typeNoti,
         content: content.content,
+        title: content.title,
       },
     );
     return this.notiRepository.findOne({ where: { id: content.id } });
