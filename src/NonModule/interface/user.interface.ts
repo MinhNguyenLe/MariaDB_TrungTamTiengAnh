@@ -12,7 +12,6 @@ export interface user {
   phoneNumber: string;
   address: string;
   gender: number;
-  schedule: schedule;
   nameRole: string;
   permission: number;
   createdAt: Date;

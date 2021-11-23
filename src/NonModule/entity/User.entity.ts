@@ -2,6 +2,7 @@ import {
   Column,
   Entity,
   JoinColumn,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -47,10 +48,6 @@ export class UserEntity {
 
   @Column({ default: '' })
   nameRole: string;
-
-  @OneToOne(() => ScheduleEntity)
-  @JoinColumn()
-  schedule: ScheduleEntity;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;

@@ -50,7 +50,13 @@ export class UsersService {
 
   async getAllStudent(): Promise<student[]> {
     return this.studentsRepository.find({
-      relations: ['user', 'studentClass', 'studentClass.classes'],
+      relations: [
+        'user',
+        'studentClass',
+        'studentClass.classes',
+        'schedule',
+        'schedule.timetable',
+      ],
     });
   }
 
@@ -100,7 +106,7 @@ export class UsersService {
   }
 
   allUser(): Promise<user[]> {
-    return this.usersRepository.find({ relations: ['schedule'] });
+    return this.usersRepository.find();
   }
 
   async findOne(username: string): Promise<user | undefined> {

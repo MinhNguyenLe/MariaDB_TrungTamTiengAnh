@@ -14,7 +14,7 @@ export interface studentClass {
 }
 
 export interface newStudentClass {
-  idStudent: number;
-  idClass: number;
+  email: string;
+  code: string;
   isPaid: boolean;
 }

@@ -8,6 +8,7 @@ import {
   JoinColumn,
   OneToMany,
 } from 'typeorm';
+import { ScheduleEntity } from './Schedule.entity';
 
 @Entity('student')
 export class StudentEntity {
@@ -29,6 +30,12 @@ export class StudentEntity {
     (studentClass: StudentClassEntity) => studentClass.student,
   )
   studentClass: StudentClassEntity[];
+
+  @OneToMany(
+    () => ScheduleEntity,
+    (schedule: ScheduleEntity) => schedule.student,
+  )
+  schedule: ScheduleEntity[];
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;

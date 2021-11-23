@@ -6,6 +6,7 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { ScheduleEntity } from './Schedule.entity';
 import { TeacherClassEntity } from './TeacherClass.entity';
 import { UserEntity } from './User.entity';
 
@@ -29,6 +30,12 @@ export class TeacherEntity {
 
   @Column({ default: '' })
   level: string;
+
+  @OneToMany(
+    () => ScheduleEntity,
+    (schedule: ScheduleEntity) => schedule.teacher,
+  )
+  schedule: ScheduleEntity[];
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;

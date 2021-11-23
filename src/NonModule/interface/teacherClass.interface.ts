@@ -15,7 +15,7 @@ export interface teacherClass {
   createdAt: Date;
 }
 export interface newTeacherClass {
-  idStudent: number;
+  idTeacher: number;
   idClass: number;
   wage: number;
   bonus: number;

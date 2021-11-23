@@ -31,6 +31,17 @@ export class ClassesController {
   getAllStudentClass(@Param('code') code: string) {
     return this.classesService.getAllStudentClass(code);
   }
+  /**
+   * test return all student class
+   */
+  @Get('/student/:x')
+  getAllStudentClassEntity() {
+    return this.classesService.getAllStudentClassEntity();
+  }
+  @Get('/teacher/:x')
+  getAllTeacherClassEntity() {
+    return this.classesService.getAllTeacherClassEntity();
+  }
 
   @Get('/teacher-class/:code')
   v(@Param('code') code: string) {
