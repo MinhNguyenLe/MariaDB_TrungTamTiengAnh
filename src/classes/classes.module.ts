@@ -9,6 +9,7 @@ import { StudentClassEntity } from 'src/NonModule/entity/StudentClass.entity';
 import { TeacherClassEntity } from 'src/NonModule/entity/TeacherClass.entity';
 import { StudentEntity } from 'src/NonModule/entity/Student.entity';
 import { TeacherEntity } from 'src/NonModule/entity/Teacher.entity';
+import { UserEntity } from 'src/NonModule/entity/User.entity';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { TeacherEntity } from 'src/NonModule/entity/Teacher.entity';
     TypeOrmModule.forFeature([StudentEntity]),
     TypeOrmModule.forFeature([TeacherClassEntity]),
     TypeOrmModule.forFeature([TeacherEntity]),
+    TypeOrmModule.forFeature([UserEntity]),
   ],
   providers: [ClassesService],
   controllers: [ClassesController],

@@ -106,7 +106,7 @@ export class UsersService {
   }
 
   allUser(): Promise<user[]> {
-    return this.usersRepository.find({ relations: ['schedule'] });
+    return this.usersRepository.find();
   }
 
   async findOne(username: string): Promise<user | undefined> {

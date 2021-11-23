@@ -27,6 +27,7 @@ import {
 import { useCheckTimeTableRoom } from 'src/NonModule/customHook/useCheckTimeTableRoom';
 
 import { Repository } from 'typeorm';
+import { UserEntity } from 'src/NonModule/entity/User.entity';
 
 @Injectable()
 export class ClassesService {
@@ -45,6 +46,8 @@ export class ClassesService {
     private teacherClassRepository: Repository<TeacherClassEntity>,
     @InjectRepository(TeacherEntity)
     private teacherRepository: Repository<TeacherEntity>,
+    @InjectRepository(UserEntity)
+    private userRepository: Repository<UserEntity>,
   ) {}
 
   async createClass(content: newClasses): Promise<course[]> {
@@ -68,12 +71,19 @@ export class ClassesService {
     return this.coursesRepository.find({ relations: ['classes'] });
   }
 
-  async createStudentClass(content: newStudentClass): Promise<studentClass[]> {
+  async createStudentClass(content: newStudentClass): Promise<classes> {
     const { check, sortArr } = useCheckTimeTableRoom();
+
+    const user = await this.userRepository.findOne({
+      where: {
+        email: content.email,
+      },
+    });
+    if (!user) customStatusCode('INTERNAL_SERVER_ERROR', 'email is incorrect');
 
     const student = await this.studentRepository.findOne({
       where: {
-        id: content.idStudent,
+        user: user,
       },
       relations: ['schedule', 'schedule.timetable'],
     });
@@ -86,7 +96,7 @@ export class ClassesService {
 
     const classes = await this.classesRepository.findOne({
       where: {
-        id: content.idClass,
+        code: content.code,
       },
       relations: ['timetable'],
     });
@@ -111,15 +121,23 @@ export class ClassesService {
       isPaid: content.isPaid,
     });
 
-    return this.studentClassRepository.find({
-      where: { classes: classes },
+    return this.classesRepository.findOne({
+      where: { code: content.code },
       relations: [
-        'classes',
-        'comment',
         'noti',
-        'student',
-        'student.schedule',
-        'student.schedule.timetable',
+        'studentClass',
+        'teacherClass',
+        'course',
+        'timetable',
+        'timetable.classroom',
+        'studentClass.student',
+        'studentClass.student.schedule',
+        'studentClass.student.user',
+        'teacherClass.teacher.user',
+        'studentClass.student.schedule.timetable',
+        'teacherClass.teacher',
+        'teacherClass.teacher.schedule',
+        'teacherClass.teacher.schedule.timetable',
       ],
     });
   }
@@ -258,6 +276,15 @@ export class ClassesService {
         'teacherClass',
         'course',
         'timetable',
+        'timetable.classroom',
+        'studentClass.student',
+        'studentClass.student.schedule',
+        'studentClass.student.user',
+        'teacherClass.teacher.user',
+        'studentClass.student.schedule.timetable',
+        'teacherClass.teacher',
+        'teacherClass.teacher.schedule',
+        'teacherClass.teacher.schedule.timetable',
       ],
     });
   }
@@ -274,7 +301,9 @@ export class ClassesService {
         'studentClass.student',
         'studentClass.student.schedule',
         'studentClass.student.schedule.timetable',
+        'studentClass.student.user',
         'teacherClass.teacher',
+        'teacherClass.teacher.user',
         'teacherClass.teacher.schedule',
         'teacherClass.teacher.schedule.timetable',
       ],
