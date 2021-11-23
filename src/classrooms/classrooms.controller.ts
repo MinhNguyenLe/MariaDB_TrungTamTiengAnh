@@ -24,6 +24,11 @@ export class ClassroomsController {
     return this.classroomsService.getAll();
   }
 
+  @Get(':id')
+  getById(@Param('id') id: number) {
+    return this.classroomsService.getById(id);
+  }
+
   @Post('/edit')
   edit(@Body('content') content: editClassRoom) {
     return this.classroomsService.editInfor(content);
@@ -39,9 +44,9 @@ export class ClassroomsController {
     return this.classroomsService.addTimeTable(content);
   }
 
-  @Delete('/delete-timetable')
-  deleteTimeTable(@Body('content') content: deleteTimeTableRoom) {
-    return this.classroomsService.deleteTimeTable(content);
+  @Delete('/delete-timetable/:id')
+  deleteTimeTable(@Param('id') id: number) {
+    return this.classroomsService.deleteTimeTable(id);
   }
 
   @Delete(':id')

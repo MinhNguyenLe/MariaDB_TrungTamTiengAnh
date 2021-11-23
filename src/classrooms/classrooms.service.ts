@@ -36,13 +36,6 @@ export class ClassroomsService {
   }
 
   async deleteById(id: number): Promise<classRoom[]> {
-    // const dataDelete = await this.classroomsRepository.findOne({ id });
-    // [...dataDelete.timetable].forEach(async (item) => {
-    //   await this.timetableRepository.delete({
-    //     id: item.id,
-    //   });
-    // });
-
     await this.classroomsRepository.delete({ id });
     return this.classroomsRepository.find({ relations: ['timetable'] });
   }
@@ -53,7 +46,7 @@ export class ClassroomsService {
     return this.classroomsRepository.find({ relations: ['timetable'] });
   }
 
-  async editInfor(content: editClassRoom): Promise<classRoom> {
+  async editInfor(content: editClassRoom): Promise<classRoom[]> {
     await this.classroomsRepository.update(
       { id: content.id },
       {
@@ -61,7 +54,7 @@ export class ClassroomsService {
         address: content.address,
       },
     );
-    return this.classroomsRepository.findOne({ where: { id: content.id } });
+    return this.classroomsRepository.find({ relations: ['timetable'] });
   }
 
   async addTimeTable(content: addTimeTableRoom): Promise<classRoom> {
@@ -92,24 +85,10 @@ export class ClassroomsService {
     return this.classroomsRepository.findOne({ where: { id: content.idRoom } });
   }
 
-  async deleteTimeTable(content: deleteTimeTableRoom): Promise<classRoom> {
-    const classroom = await this.classroomsRepository.findOne({
-      where: { id: content.id },
-    });
+  async deleteTimeTable(id: number): Promise<classRoom[]> {
+    await this.timetableRepository.delete({ id });
 
-    const result = [];
-
-    classroom.timetable.forEach((item) => {
-      if (item.id !== content.idTimeTable) result.push(item);
-    });
-
-    await this.classroomsRepository.update(
-      { id: content.id },
-      {
-        timetable: result,
-      },
-    );
-    return this.classroomsRepository.findOne({ where: { id: content.id } });
+    return this.classroomsRepository.find({ relations: ['timetable'] });
   }
 
   async clearRepo(): Promise<classRoom[]> {
