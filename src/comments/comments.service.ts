@@ -10,6 +10,7 @@ import {
   commentType,
   editComment,
 } from 'src/NonModule/interface/comment.interface';
+import { notificationClass } from 'src/NonModule/interface/notificationClass.interface';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -25,7 +26,7 @@ export class CommentsService {
     private notiRepository: Repository<NotificationClassEntity>,
   ) {}
 
-  async create(content: newComment): Promise<commentType[]> {
+  async create(content: newComment): Promise<notificationClass> {
     const noti = await this.notiRepository.findOne({
       where: { id: content.idNoti },
     });
@@ -49,8 +50,23 @@ export class CommentsService {
         content: content.content,
       });
     }
-    return this.commentRepository.find({
-      relations: ['noti', 'teacherClass', 'studentClass'],
+    return this.notiRepository.findOne({
+      where: { id: content.idNoti },
+      relations: [
+        'type',
+        'comment',
+        'studentClass',
+        'teacherClass',
+        'studentClass.student',
+        'studentClass.student.schedule',
+        'studentClass.student.user',
+        'teacherClass.teacher.user',
+        'studentClass.student.schedule.timetable',
+        'teacherClass.teacher',
+        'teacherClass.teacher.schedule',
+        'teacherClass.teacher.schedule.timetable',
+        'classes',
+      ],
     });
   }
 
