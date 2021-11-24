@@ -21,6 +21,8 @@ export interface newNotificationClass {
   content: string;
   title: string;
   idClass: number;
+  idUserClass: number;
+  role: string;
 }
 
 export interface editNotificationClass {
