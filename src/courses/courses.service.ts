@@ -41,7 +41,10 @@ export class CoursesService {
   }
 
   async getById(id: number): Promise<course> {
-    return this.coursesRepository.findOne({ where: { id } });
+    return this.coursesRepository.findOne({
+      where: { id },
+      relations: ['classes'],
+    });
   }
 
   async getAll(): Promise<course[]> {
