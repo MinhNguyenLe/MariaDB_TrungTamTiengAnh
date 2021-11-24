@@ -6,6 +6,8 @@ import { NotificationClassEntity } from 'src/NonModule/entity/NotificationClass.
 import { ClassEntity } from 'src/NonModule/entity/Class.entity';
 import { NotificationTypeEntity } from 'src/NonModule/entity/NotificationType.entity';
 import { CommentEntity } from 'src/NonModule/entity/Comment.entity';
+import { StudentClassEntity } from 'src/NonModule/entity/StudentClass.entity';
+import { TeacherClassEntity } from 'src/NonModule/entity/TeacherClass.entity';
 
 @Module({
   imports: [
@@ -13,6 +15,8 @@ import { CommentEntity } from 'src/NonModule/entity/Comment.entity';
     TypeOrmModule.forFeature([ClassEntity]),
     TypeOrmModule.forFeature([NotificationTypeEntity]),
     TypeOrmModule.forFeature([CommentEntity]),
+    TypeOrmModule.forFeature([StudentClassEntity]),
+    TypeOrmModule.forFeature([TeacherClassEntity]),
   ],
   providers: [NotisService],
   controllers: [NotisController],

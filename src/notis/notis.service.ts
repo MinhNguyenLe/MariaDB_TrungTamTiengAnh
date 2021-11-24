@@ -20,6 +20,8 @@ import {
   notificationClass,
 } from 'src/NonModule/interface/notificationClass.interface';
 import { Repository } from 'typeorm';
+import { StudentClassEntity } from 'src/NonModule/entity/StudentClass.entity';
+import { TeacherClassEntity } from 'src/NonModule/entity/TeacherClass.entity';
 
 @Injectable()
 export class NotisService {
@@ -32,6 +34,10 @@ export class NotisService {
     private notiTypeRepository: Repository<NotificationTypeEntity>,
     @InjectRepository(CommentEntity)
     private commentRepository: Repository<CommentEntity>,
+    @InjectRepository(StudentClassEntity)
+    private studentClassRepository: Repository<StudentClassEntity>,
+    @InjectRepository(TeacherClassEntity)
+    private teacherClassRepository: Repository<TeacherClassEntity>,
   ) {}
 
   async create(content: newNotificationClass): Promise<classes> {
@@ -43,12 +49,29 @@ export class NotisService {
       id: content.idType,
     });
 
-    await this.notiRepository.save({
-      type: typeNoti,
-      classes: classes,
-      content: content.content,
-      title: content.title,
-    });
+    if (content.role === 'student') {
+      const student = await this.studentClassRepository.findOne({
+        id: content.idUserClass,
+      });
+      await this.notiRepository.save({
+        type: typeNoti,
+        classes: classes,
+        content: content.content,
+        title: content.title,
+        studentClass: student,
+      });
+    } else {
+      const teacher = await this.teacherClassRepository.findOne({
+        id: content.idUserClass,
+      });
+      await this.notiRepository.save({
+        type: typeNoti,
+        classes: classes,
+        content: content.content,
+        title: content.title,
+        studentClass: teacher,
+      });
+    }
 
     return this.classesRepository.findOne({
       where: { id: content.idClass },
@@ -88,7 +111,24 @@ export class NotisService {
   }
 
   async getById(id: number): Promise<notificationClass> {
-    return this.notiRepository.findOne({ where: { id } });
+    return this.notiRepository.findOne({
+      where: { id },
+      relations: [
+        'type',
+        'comment',
+        'studentClass',
+        'teacherClass',
+        'studentClass.student',
+        'studentClass.student.schedule',
+        'studentClass.student.user',
+        'teacherClass.teacher.user',
+        'studentClass.student.schedule.timetable',
+        'teacherClass.teacher',
+        'teacherClass.teacher.schedule',
+        'teacherClass.teacher.schedule.timetable',
+        'classes',
+      ],
+    });
   }
 
   async getAll(): Promise<notificationClass[]> {
@@ -103,7 +143,7 @@ export class NotisService {
   }
 
   async clearRepo(): Promise<notificationClass[]> {
-    await this.notiRepository.clear();
+    await this.notiRepository.delete({});
     return this.notiRepository.find();
   }
 }
