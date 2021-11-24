@@ -21,14 +21,14 @@ export class NotiTypesService {
     return this.notiTypesRepository.find();
   }
 
-  async edit(content: editNotificationType): Promise<notificationType> {
+  async edit(content: editNotificationType): Promise<notificationType[]> {
     await this.notiTypesRepository.update(
       { id: content.id },
       {
         name: content.name,
       },
     );
-    return this.notiTypesRepository.findOne({ where: { id: content.id } });
+    return this.notiTypesRepository.find();
   }
 
   async getById(id: number): Promise<notificationType> {
