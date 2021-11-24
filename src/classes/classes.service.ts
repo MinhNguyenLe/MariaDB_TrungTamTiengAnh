@@ -38,10 +38,10 @@ export class ClassesService {
     private coursesRepository: Repository<CourseEntity>,
     @InjectRepository(ScheduleEntity)
     private scheduleRepository: Repository<ScheduleEntity>,
-    @InjectRepository(StudentClassEntity)
-    private studentClassRepository: Repository<StudentClassEntity>,
     @InjectRepository(StudentEntity)
     private studentRepository: Repository<StudentEntity>,
+    @InjectRepository(StudentClassEntity)
+    private studentClassRepository: Repository<StudentClassEntity>,
     @InjectRepository(TeacherClassEntity)
     private teacherClassRepository: Repository<TeacherClassEntity>,
     @InjectRepository(TeacherEntity)
