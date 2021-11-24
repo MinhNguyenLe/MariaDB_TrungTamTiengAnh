@@ -7,6 +7,8 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { ScheduleEntity } from './Schedule.entity';
+import { StudentEntity } from './Student.entity';
+import { TeacherEntity } from './Teacher.entity';
 
 @Entity('user')
 export class UserEntity {

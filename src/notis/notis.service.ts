@@ -116,6 +116,8 @@ export class NotisService {
       relations: [
         'type',
         'comment',
+        'comment.studentClass',
+        'comment.teacherClass',
         'studentClass',
         'teacherClass',
         'studentClass.student',

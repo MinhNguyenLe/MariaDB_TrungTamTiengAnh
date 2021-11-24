@@ -6,9 +6,16 @@ import { UsersModule } from '../users/user.module';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { AdminEntity } from 'src/NonModule/entity/Admin.entity';
+import { StudentEntity } from 'src/NonModule/entity/Student.entity';
+import { TeacherEntity } from 'src/NonModule/entity/Teacher.entity';
 
 @Module({
   imports: [
+    TypeOrmModule.forFeature([AdminEntity]),
+    TypeOrmModule.forFeature([StudentEntity]),
+    TypeOrmModule.forFeature([TeacherEntity]),
     UsersModule,
     PassportModule,
     JwtModule.register({

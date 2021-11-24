@@ -10,8 +10,8 @@ import { AdminEntity } from 'src/NonModule/entity/Admin.entity';
 @Module({
   imports: [
     TypeOrmModule.forFeature([UserEntity]),
-    TypeOrmModule.forFeature([StudentEntity]),
     TypeOrmModule.forFeature([AdminEntity]),
+    TypeOrmModule.forFeature([StudentEntity]),
     TypeOrmModule.forFeature([TeacherEntity]),
   ],
   controllers: [UsersController],
