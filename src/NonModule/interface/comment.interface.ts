@@ -11,3 +11,15 @@ export interface commentType {
   noti: notificationClass;
   createdAt: Date;
 }
+
+export interface newComment {
+  content: string;
+  role: string;
+  idNoti: number;
+  idUserClass: number;
+}
+
+export interface editComment {
+  content: string;
+  id: number;
+}

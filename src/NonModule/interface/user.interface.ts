@@ -1,4 +1,6 @@
 import { schedule } from './schedule.interface';
+import { student } from './student.interface';
+import { teacher } from './teacher.interface';
 
 export interface user {
   id: number;
