@@ -31,7 +31,8 @@ export class CoursesService {
     @InjectRepository(TeacherEntity)
     private teacherRepository: Repository<TeacherEntity>,
     @InjectRepository(NotificationClassEntity)
-    private notiRepository: Repository<NotificationClassEntity>,@InjectRepository(TimeTableEntity)
+    private notiRepository: Repository<NotificationClassEntity>,
+    @InjectRepository(TimeTableEntity)
     private timetableRepository: Repository<TimeTableEntity>,
   ) {}
 
@@ -65,7 +66,7 @@ export class CoursesService {
   }
 
   async getAll(): Promise<course[]> {
-    return this.coursesRepository.find({ relations: ['classes','classes.timetable','class.studentClass','class.teacherClass','class.noti'] });
+    return this.coursesRepository.find({ relations: ['classes','classes.noti','classes.timetable','classes.timetable.classroom','classes.studentClass','classes.teacherClass'] });
   }
 
   async deleteById(id: number): Promise<course[]> {
