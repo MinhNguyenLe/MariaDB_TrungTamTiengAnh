@@ -48,7 +48,7 @@ export class CoursesService {
   }
 
   async getAll(): Promise<course[]> {
-    return this.coursesRepository.find({ relations: ['classes'] });
+    return this.coursesRepository.find({ relations: ['classes','classes.timetable','class.studentClass','class.teacherClass','class.noti'] });
   }
 
   async deleteById(id: number): Promise<course[]> {
