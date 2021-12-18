@@ -16,7 +16,8 @@ export interface teacherClass {
 }
 export interface newTeacherClass {
   idTeacher: number;
-  idClass: number;
+  code: string;
+  email:string;
   wage: number;
   bonus: number;
   isPaid: boolean;

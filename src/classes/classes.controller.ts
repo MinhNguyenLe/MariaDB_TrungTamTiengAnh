@@ -58,9 +58,19 @@ export class ClassesController {
     return this.classesService.createStudentClass(content);
   }
 
+  @Post('/create-student-class/all')
+  createStudentClassGetAll(@Body('content') content: newStudentClass) {
+    return this.classesService.createStudentClassGetAll(content);
+  }
+
   @Post('/create-teacher-class')
   createTeacherClass(@Body('content') content: newTeacherClass) {
     return this.classesService.createTeacherClass(content);
+  }
+
+  @Get(':id')
+  getById(@Param('id') id: number) {
+    return this.classesService.getById(id);
   }
 
   @Delete(':id')

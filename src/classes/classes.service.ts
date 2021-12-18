@@ -141,13 +141,89 @@ export class ClassesService {
       ],
     });
   }
-
-  async createTeacherClass(content: newTeacherClass): Promise<teacherClass[]> {
+  async createStudentClassGetAll(content: newStudentClass): Promise<classes[]> {
     const { check, sortArr } = useCheckTimeTableRoom();
+
+    const user = await this.userRepository.findOne({
+      where: {
+        email: content.email,
+      },
+    });
+    if (!user) customStatusCode('INTERNAL_SERVER_ERROR', 'email is incorrect');
+
+    const student = await this.studentRepository.findOne({
+      where: {
+        user: user,
+      },
+      relations: ['schedule', 'schedule.timetable'],
+    });
+
+    const schedule = [];
+    student.schedule.forEach((item) => {
+      schedule.push(item.timetable);
+    });
+    console.log(schedule);
+
+    const classes = await this.classesRepository.findOne({
+      where: {
+        code: content.code,
+      },
+      relations: ['timetable'],
+    });
+    const checked = check(schedule, classes.timetable);
+    if (checked.length !== classes.timetable.length) {
+      customStatusCode(
+        'INTERNAL_SERVER_ERROR',
+        'timetable of this class conflict with timetable student',
+      );
+    } else {
+      for (const item of classes.timetable) {
+        await this.scheduleRepository.save({
+          student: student,
+          timetable: item,
+        });
+      }
+    }
+
+    await this.studentClassRepository.save({
+      student: student,
+      classes: classes,
+      isPaid: content.isPaid,
+    });
+
+    return this.classesRepository.find({
+      relations: [
+        'noti',
+        'studentClass',
+        'teacherClass',
+        'course',
+        'timetable',
+        'timetable.classroom',
+        'studentClass.student',
+        'studentClass.student.schedule',
+        'studentClass.student.user',
+        'teacherClass.teacher.user',
+        'studentClass.student.schedule.timetable',
+        'teacherClass.teacher',
+        'teacherClass.teacher.schedule',
+        'teacherClass.teacher.schedule.timetable',
+      ],
+    });
+  }
+
+  async createTeacherClass(content: newTeacherClass): Promise<classes[]> {
+    const { check, sortArr } = useCheckTimeTableRoom();
+
+    const user = await this.userRepository.findOne({
+      where: {
+        email: content.email,
+      },
+    });
+    if (!user) customStatusCode('INTERNAL_SERVER_ERROR', 'email is incorrect');
 
     const teacher = await this.teacherRepository.findOne({
       where: {
-        id: content.idTeacher,
+        user: user,
       },
       relations: ['schedule', 'schedule.timetable'],
     });
@@ -156,11 +232,10 @@ export class ClassesService {
     teacher.schedule.forEach((item) => {
       schedule.push(item.timetable);
     });
-    console.log(schedule);
 
     const classes = await this.classesRepository.findOne({
       where: {
-        id: content.idClass,
+        code: content.code,
       },
       relations: ['timetable'],
     });
@@ -188,15 +263,22 @@ export class ClassesService {
       bonus: content.bonus,
     });
 
-    return this.teacherClassRepository.find({
-      where: { classes: classes },
+    return this.classesRepository.find({
       relations: [
-        'classes',
-        'comment',
         'noti',
-        'teacher',
-        'teacher.schedule',
-        'teacher.schedule.timetable',
+        'studentClass',
+        'teacherClass',
+        'course',
+        'timetable',
+        'timetable.classroom',
+        'studentClass.student',
+        'studentClass.student.schedule',
+        'studentClass.student.user',
+        'teacherClass.teacher.user',
+        'studentClass.student.schedule.timetable',
+        'teacherClass.teacher',
+        'teacherClass.teacher.schedule',
+        'teacherClass.teacher.schedule.timetable',
       ],
     });
   }
@@ -239,23 +321,58 @@ export class ClassesService {
     });
   }
 
-  async editClass(content: classesEdit): Promise<classes> {
+  async editClass(content: classesEdit): Promise<classes[]> {
     await this.classesRepository.update(
       { id: content.id },
       {
         name: content.name,
+        code: content.code
       },
     );
-    return this.classesRepository.findOne({ where: { id: content.id } });
+    return this.classesRepository.find({
+      relations: [
+        'noti',
+        'studentClass',
+        'teacherClass',
+        'course',
+        'timetable',
+        'timetable.classroom',
+        'studentClass.student',
+        'studentClass.student.schedule',
+        'studentClass.student.schedule.timetable',
+        'studentClass.student.user',
+        'teacherClass.teacher',
+        'teacherClass.teacher.user',
+        'teacherClass.teacher.schedule',
+        'teacherClass.teacher.schedule.timetable',
+      ],
+    });
   }
 
   async deleteById(id: number): Promise<classes[]> {
     await this.classesRepository.delete({ id });
-    return this.classesRepository.find();
+    return this.classesRepository.find({
+      relations: [
+        'noti',
+        'studentClass',
+        'teacherClass',
+        'course',
+        'timetable',
+        'timetable.classroom',
+        'studentClass.student',
+        'studentClass.student.schedule',
+        'studentClass.student.schedule.timetable',
+        'studentClass.student.user',
+        'teacherClass.teacher',
+        'teacherClass.teacher.user',
+        'teacherClass.teacher.schedule',
+        'teacherClass.teacher.schedule.timetable',
+      ],
+    });
   }
 
-  async getById(id: number): Promise<classes[]> {
-    return this.classesRepository.find({
+  async getById(id: number): Promise<classes> {
+    return this.classesRepository.findOne({
       where: { id },
       relations: [
         'noti',
@@ -263,6 +380,15 @@ export class ClassesService {
         'teacherClass',
         'course',
         'timetable',
+        'timetable.classroom',
+        'studentClass.student',
+        'studentClass.student.schedule',
+        'studentClass.student.schedule.timetable',
+        'studentClass.student.user',
+        'teacherClass.teacher',
+        'teacherClass.teacher.user',
+        'teacherClass.teacher.schedule',
+        'teacherClass.teacher.schedule.timetable',
       ],
     });
   }
