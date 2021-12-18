@@ -33,6 +33,7 @@ const checkValPushArr = (arr) => {
 };
 
 const check = (befArr, aftArr) => {
+  if(aftArr.length === 0) return []
   const result = [];
 
   /**

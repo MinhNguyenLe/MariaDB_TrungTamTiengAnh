@@ -63,6 +63,11 @@ export class ClassesController {
     return this.classesService.createStudentClassGetAll(content);
   }
 
+  @Post('/create-student-class/student')
+  createStudentClassGetStudent(@Body('content') content: newStudentClass) {
+    return this.classesService.createStudentClassGetStudent(content);
+  }
+
   @Post('/create-teacher-class')
   createTeacherClass(@Body('content') content: newTeacherClass) {
     return this.classesService.createTeacherClass(content);
