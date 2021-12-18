@@ -14,6 +14,8 @@ import {
   classesEdit,
   newClasses,
 } from 'src/NonModule/interface/class.interface';
+import { student } from 'src/NonModule/interface/student.interface';
+
 import { course } from 'src/NonModule/interface/course.interface';
 import {
   newStudentClass,
@@ -207,6 +209,71 @@ export class ClassesService {
         'teacherClass.teacher',
         'teacherClass.teacher.schedule',
         'teacherClass.teacher.schedule.timetable',
+      ],
+    });
+  }
+
+  async createStudentClassGetStudent(content: newStudentClass): Promise<student> {
+    const { check, sortArr } = useCheckTimeTableRoom();
+
+    const user = await this.userRepository.findOne({
+      where: {
+        email: content.email,
+      },
+    });
+    if (!user) customStatusCode('INTERNAL_SERVER_ERROR', 'email is incorrect');
+
+    const student = await this.studentRepository.findOne({
+      where: {
+        user: user,
+      },
+      relations: ['schedule', 'schedule.timetable'],
+    });
+
+    const schedule = [];
+   student?.schedule.forEach((item) => {
+      schedule.push(item.timetable);
+    });
+    console.log(schedule);
+
+    const classes = await this.classesRepository.findOne({
+      where: {
+        code: content.code,
+      },
+      relations: ['timetable'],
+    });
+
+    const checked = schedule ? check(schedule, classes.timetable) : check([], classes.timetable);
+    if (checked.length !== classes.timetable.length) {
+      customStatusCode(
+        'INTERNAL_SERVER_ERROR',
+        'timetable of this class conflict with timetable student',
+      );
+    } else {
+      for (const item of classes.timetable) {
+        await this.scheduleRepository.save({
+          student: student,
+          timetable: item,
+        });
+      }
+    }
+
+    await this.studentClassRepository.save({
+      student: student,
+      classes: classes,
+      isPaid: content.isPaid,
+    });
+
+    return this.studentRepository.findOne({
+      where: {
+        user: user,
+      },
+      relations: [
+        'user',
+        'studentClass',
+        'studentClass.classes',
+        'schedule',
+        'schedule.timetable',
       ],
     });
   }
