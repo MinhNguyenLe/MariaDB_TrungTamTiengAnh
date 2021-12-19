@@ -1,3 +1,4 @@
+import { editStudent, editTeacher } from './../NonModule/interface/user.interface';
 import customStatusCode from './../NonModule/customStatusCode/index';
 import {
   Body,
@@ -76,6 +77,16 @@ export class UsersController {
   @Post('/register-teacher')
   registerTeacher(@Body('account') account: registerTeacher) {
     return this.usersService.registerTeacher(account);
+  }
+
+  @Post('/edit-student')
+  editStudent(@Body('account') account: editStudent) {
+    return this.usersService.editStudent(account);
+  }
+
+  @Post('/edit-teacher')
+  editTeacher(@Body('account') account: editTeacher) {
+    return this.usersService.editTeacher(account);
   }
 
   @Delete()
