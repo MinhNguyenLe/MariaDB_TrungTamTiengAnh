@@ -34,6 +34,30 @@ export interface register {
   permission: number;
 }
 
+export interface editStudent {
+  id:number,
+  lastName: string;
+  firstName: string;
+  placeBirth: string;
+  dateBirth: string;
+  phoneNumber: string;
+  address: string;
+  level: string;
+  education:string
+}
+
+export interface editTeacher {
+  id:number,
+  lastName: string;
+  firstName: string;
+  placeBirth: string;
+  dateBirth: string;
+  phoneNumber: string;
+  address: string;
+  level: string;
+  certificate:string
+}
+
 
 export interface registerTeacher {
   userName: string;

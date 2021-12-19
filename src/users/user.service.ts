@@ -1,10 +1,11 @@
+import { editTeacher } from './../NonModule/interface/user.interface';
 import { student } from './../NonModule/interface/student.interface';
 import { studentClass } from '../NonModule/interface/studentClass.interface';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from '../NonModule/entity/User.entity';
 import { StudentEntity } from '../NonModule/entity/Student.entity';
-import { user, register, registerTeacher } from '../NonModule/interface/user.interface';
+import { user, register, registerTeacher, editStudent } from '../NonModule/interface/user.interface';
 import { Repository } from 'typeorm';
 import { Console, log } from 'console';
 import * as bcrypt from 'bcrypt';
@@ -128,6 +129,92 @@ export class UsersService {
       where: {
         userName: username,
       },
+    });
+  }
+
+  async editStudent(account: editStudent): Promise<student> {
+    const user = await this.usersRepository.findOne({
+      where: {
+        id: account.id
+      },
+    });
+    await this.studentsRepository.update(
+      { user},
+      {
+        education: account.education,
+        level: account.level
+      },
+    );
+    await this.usersRepository.update(
+      { id: account.id},
+      {
+        lastName: account.lastName,
+        firstName: account.firstName,
+        placeBirth: account.placeBirth,
+        dateBirth: account.dateBirth,
+        phoneNumber: account.phoneNumber,
+        address: account.address,
+      },
+    );
+    return this.studentsRepository.findOne({
+      where: { user },
+      relations: [
+        'user',
+        'studentClass',
+        'studentClass.classes',
+        'studentClass.classes.noti',
+        'studentClass.classes.course',
+        'studentClass.classes.teacherClass',
+        'studentClass.classes.teacherClass.teacher',
+        'studentClass.classes.teacherClass.teacher.user',
+        'studentClass.classes.timetable',
+        'studentClass.classes.timetable.classroom',
+        'schedule',
+        'schedule.timetable',
+      ],
+    });
+  }
+
+  async editTeacher(account: editTeacher): Promise<teacher> {
+    const user = await this.usersRepository.findOne({
+      where: {
+        id: account.id
+      },
+    });
+    await this.teacherRepository.update(
+      { user},
+      {
+        certificate: account.certificate,
+        level: account.level
+      },
+    );
+    await this.usersRepository.update(
+      { id: account.id},
+      {
+        lastName: account.lastName,
+        firstName: account.firstName,
+        placeBirth: account.placeBirth,
+        dateBirth: account.dateBirth,
+        phoneNumber: account.phoneNumber,
+        address: account.address,
+      },
+    );
+    return this.teacherRepository.findOne({
+      where: { user },
+      relations: [
+        'user',
+        'teacherClass',
+        'teacherClass.classes',
+        'teacherClass.classes.noti',
+        'teacherClass.classes.course',
+        'teacherClass.classes.studentClass',
+        'teacherClass.classes.studentClass.student',
+        'teacherClass.classes.studentClass.student.user',
+        'teacherClass.classes.timetable',
+        'teacherClass.classes.timetable.classroom',
+        'schedule',
+        'schedule.timetable',
+      ],
     });
   }
 
