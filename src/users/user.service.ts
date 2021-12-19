@@ -134,6 +134,19 @@ export class UsersService {
     })
   }
 
+  async deleteTeacherByID(id: number):Promise<teacher[]> {
+    await this.teacherRepository.delete({ id });
+    return this.teacherRepository.find({
+       relations: [
+        'user',
+        'teacherClass',
+        'teacherClass.classes',
+        'schedule',
+        'schedule.timetable',
+      ],
+    })
+  }
+
   async clearRepo(): Promise<user[]> {
     await this.usersRepository.clear();
     return this.usersRepository.find();
