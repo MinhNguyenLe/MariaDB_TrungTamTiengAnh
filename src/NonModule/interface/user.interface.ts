@@ -33,3 +33,12 @@ export interface register {
   nameRole: string;
   permission: number;
 }
+
+
+export interface registerTeacher {
+  userName: string;
+  password: string;
+  email: string;
+  nameRole: string;
+  permission: number;
+}

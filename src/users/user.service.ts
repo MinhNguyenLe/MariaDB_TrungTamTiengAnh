@@ -4,7 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from '../NonModule/entity/User.entity';
 import { StudentEntity } from '../NonModule/entity/Student.entity';
-import { user, register } from '../NonModule/interface/user.interface';
+import { user, register, registerTeacher } from '../NonModule/interface/user.interface';
 import { Repository } from 'typeorm';
 import { Console, log } from 'console';
 import * as bcrypt from 'bcrypt';
@@ -46,6 +46,20 @@ export class UsersService {
       });
     }
     return user;
+  }
+
+  async registerTeacher(account:  registerTeacher): Promise<teacher[]> {
+    const salt = await bcrypt.genSalt();
+    account.password = await bcrypt.hash(account.password, salt);
+    const user = await this.usersRepository.save(account);
+    await this.teacherRepository.save({
+      user: user,
+    });
+    return this.teacherRepository.find({ relations: [ 'user',
+    'teacherClass',
+    'teacherClass.classes',
+    'schedule',
+    'schedule.timetable',] });
   }
 
   async getAllStudent(): Promise<student[]> {
@@ -119,6 +133,32 @@ export class UsersService {
 
   async deleteUserByID(userID: number) {
     await this.usersRepository.delete({ id: userID });
+  }
+
+  async deleteStudentByID(id: number):Promise<student[]> {
+    await this.studentsRepository.delete({ id });
+    return this.studentsRepository.find({
+       relations: [
+        'user',
+        'studentClass',
+        'studentClass.classes',
+        'schedule',
+        'schedule.timetable',
+      ],
+    })
+  }
+
+  async deleteTeacherByID(id: number):Promise<teacher[]> {
+    await this.teacherRepository.delete({ id });
+    return this.teacherRepository.find({
+       relations: [
+        'user',
+        'teacherClass',
+        'teacherClass.classes',
+        'schedule',
+        'schedule.timetable',
+      ],
+    })
   }
 
   async clearRepo(): Promise<user[]> {

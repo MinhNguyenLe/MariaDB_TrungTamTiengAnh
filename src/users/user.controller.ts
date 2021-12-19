@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './user.service';
 import { studentClass } from '../NonModule/interface/studentClass.interface';
-import { register } from 'src/NonModule/interface/user.interface';
+import { register, registerTeacher } from 'src/NonModule/interface/user.interface';
 
 @Controller('users')
 export class UsersController {
@@ -48,6 +48,16 @@ export class UsersController {
     return this.usersService.deleteUserByID(id);
   }
 
+  @Delete("/student/:id")
+  deleteStudentById(@Param('id') id: number) {
+    return this.usersService.deleteStudentByID(id);
+  }
+
+  @Delete("/teacher/:id")
+  deleteTeacherById(@Param('id') id: number) {
+    return this.usersService.deleteTeacherByID(id);
+  }
+
   @Post('/register')
   register(@Body('account') account: register) {
     console.log(account);
@@ -61,6 +71,11 @@ export class UsersController {
       customStatusCode('INTERNAL_SERVER_ERROR', 'address not found');
     }
     return this.usersService.register(account);
+  }
+
+  @Post('/register-teacher')
+  registerTeacher(@Body('account') account: registerTeacher) {
+    return this.usersService.registerTeacher(account);
   }
 
   @Delete()
