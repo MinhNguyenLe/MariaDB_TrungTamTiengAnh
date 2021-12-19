@@ -48,6 +48,11 @@ export class UsersController {
     return this.usersService.deleteUserByID(id);
   }
 
+  @Delete("/student/:id")
+  deleteStudentById(@Param('id') id: number) {
+    return this.usersService.deleteStudentByID(id);
+  }
+
   @Post('/register')
   register(@Body('account') account: register) {
     console.log(account);
