@@ -24,7 +24,7 @@ export class ClassEntity {
   @Column({ default: '' })
   code: string;
 
-  @Column({ default: 60 })
+  @Column({ default: 10 })
   session: number;
 
   @OneToMany(
