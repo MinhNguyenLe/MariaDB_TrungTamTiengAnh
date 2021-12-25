@@ -24,6 +24,9 @@ export class ClassEntity {
   @Column({ default: '' })
   code: string;
 
+  @Column({ default: 60 })
+  session: number;
+
   @OneToMany(
     () => NotificationClassEntity,
     (noti: NotificationClassEntity) => noti.classes,

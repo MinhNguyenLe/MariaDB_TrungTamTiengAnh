@@ -21,6 +21,9 @@ export class TeacherClassEntity {
   @Column({ default: 0 })
   bonus: number;
 
+  @Column("text", { array: true ,default:[]})
+  multiChoice: string[];
+
   @Column({ default: false })
   isPaid: boolean;
 

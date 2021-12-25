@@ -15,6 +15,12 @@ export class StudentClassEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column("text", { array: true ,default:[] })
+  multiChoice: string[];
+
+  @Column("text", { array: true  ,default:[]})
+  scoreProgress: string[];
+
   @ManyToOne(
     () => StudentEntity,
     (student: StudentEntity) => student.studentClass,
