@@ -13,6 +13,7 @@ export interface teacherClass {
   noti: notificationClass[];
   classes: classes;
   createdAt: Date;
+  multiChoice:Array<string>;
 }
 export interface newTeacherClass {
   idTeacher: number;

@@ -52,6 +52,60 @@ export class ClassesService {
     private userRepository: Repository<UserEntity>,
   ) {}
 
+  async createTestMultiChoice(content: string[],id:number): Promise<classes[]> {
+    await this.teacherClassRepository.update(
+      { id: id },
+      {
+        multiChoice: content
+      },
+    );
+    return this.classesRepository.find({
+      relations: [
+        'noti',
+        'studentClass',
+        'teacherClass',
+        'course',
+        'timetable',
+        'timetable.classroom',
+        'studentClass.student',
+        'studentClass.student.schedule',
+        'studentClass.student.user',
+        'teacherClass.teacher.user',
+        'studentClass.student.schedule.timetable',
+        'teacherClass.teacher',
+        'teacherClass.teacher.schedule',
+        'teacherClass.teacher.schedule.timetable',
+      ],
+    });
+  }
+
+  async createMultiChoice(content: string[],id:number): Promise<classes[]> {
+    await this.studentClassRepository.update(
+      { id: id },
+      {
+        multiChoice: content
+      },
+    );
+    return this.classesRepository.find({
+      relations: [
+        'noti',
+        'studentClass',
+        'teacherClass',
+        'course',
+        'timetable',
+        'timetable.classroom',
+        'studentClass.student',
+        'studentClass.student.schedule',
+        'studentClass.student.user',
+        'teacherClass.teacher.user',
+        'studentClass.student.schedule.timetable',
+        'teacherClass.teacher',
+        'teacherClass.teacher.schedule',
+        'teacherClass.teacher.schedule.timetable',
+      ],
+    });
+  }
+
   async createClass(content: newClasses): Promise<course[]> {
     if (!content.course)
       customStatusCode('INTERNAL_SERVER_ERROR', 'id of course must require');

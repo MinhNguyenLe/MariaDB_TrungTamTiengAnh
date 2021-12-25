@@ -11,6 +11,8 @@ export interface studentClass {
   comment: commentType[];
   noti: notificationClass[];
   createdAt: Date;
+  multiChoice:Array<string>;
+  scoreProgress:Array<string>;
 }
 
 export interface newStudentClass {

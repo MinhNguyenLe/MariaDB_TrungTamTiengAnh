@@ -17,6 +17,20 @@ export class ClassesController {
     return this.classesService.createClass(content);
   }
 
+  @Post('/create-multi-choice/teacher')
+  createTestMultiChoice(@Body('content') content:{
+    content: string[],id:number
+  }  ) {
+    return this.classesService.createTestMultiChoice(content.content,content.id);
+  }
+
+  @Post('/create-multi-choice/student')
+  createMultiChoice(@Body('content') content:{
+    content: string[],id:number
+  }  ) {
+    return this.classesService.createMultiChoice(content.content,content.id);
+  }
+
   @Get()
   getAll() {
     return this.classesService.getAll();
