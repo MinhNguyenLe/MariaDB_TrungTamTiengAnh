@@ -13,6 +13,7 @@ export interface studentClass {
   createdAt: Date;
   multiChoice:Array<string>;
   scoreProgress:Array<string>;
+  quizzesScore:string
 }
 
 export interface newStudentClass {

@@ -21,6 +21,9 @@ export class StudentClassEntity {
   @Column("text", { array: true  ,default:[]})
   scoreProgress: string[];
 
+  @Column({default:""})
+  quizzesScore: string;
+
   @ManyToOne(
     () => StudentEntity,
     (student: StudentEntity) => student.studentClass,
