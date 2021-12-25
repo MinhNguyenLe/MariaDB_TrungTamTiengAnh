@@ -52,6 +52,51 @@ export class ClassesService {
     private userRepository: Repository<UserEntity>,
   ) {}
 
+  async createQuizzesScore(idSolution: number): Promise<classes> {
+    const teacher = await this.teacherClassRepository.findOne(
+     {where:{id:idSolution},relations:["classes","teacher","classes.studentClass"]}
+    );
+
+    for (const item of teacher.classes.studentClass) {
+      const student = await this.studentClassRepository.findOne(
+        {where:{id:item.id}}
+       );
+       if(!student.quizzesScore){
+         let score = 0;
+         [...teacher.multiChoice].forEach((item,index) =>{
+          if(item === student["multiChoice"][index]) {
+            score = score + 1
+          }
+        })
+        await this.studentClassRepository.update(
+          { id:item.id },
+          {
+            quizzesScore: `${score}/${teacher.multiChoice.length}`
+          },
+        );
+       }
+    }
+    return this.classesRepository.findOne({
+      where:{id:teacher.classes.id},
+      relations: [
+        'noti',
+        'studentClass',
+        'teacherClass',
+        'course',
+        'timetable',
+        'timetable.classroom',
+        'studentClass.student',
+        'studentClass.student.schedule',
+        'studentClass.student.user',
+        'teacherClass.teacher.user',
+        'studentClass.student.schedule.timetable',
+        'teacherClass.teacher',
+        'teacherClass.teacher.schedule',
+        'teacherClass.teacher.schedule.timetable',
+      ],
+    });
+  }
+
   async createTestMultiChoice(content: string[],id:number): Promise<classes[]> {
     await this.teacherClassRepository.update(
       { id: id },

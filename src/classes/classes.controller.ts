@@ -40,6 +40,10 @@ export class ClassesController {
   getByCode(@Param('code') code: string) {
     return this.classesService.getByCode(code);
   }
+  @Post('/auto-quizzes-score')
+  createQuizzesScore(@Body('idSolution') idSolution:number ) {
+    return this.classesService.createQuizzesScore(idSolution);
+  }
 
   @Get('/student-class/:code')
   getAllStudentClass(@Param('code') code: string) {
