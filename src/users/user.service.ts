@@ -103,7 +103,7 @@ export class UsersService {
         code.push(item.classes.code);
       });
     } 
-     if (role === 'teacher') {
+     else if (role === 'teacher') {
       const teacher = await this.teacherRepository.findOne({
         where: {
           user: user,
@@ -114,7 +114,8 @@ export class UsersService {
       teacher.teacherClass.forEach((item) => {
         code.push(item.classes.code);
       });
-    } else {
+    } 
+    else {
       customStatusCode('INTERNAL_SERVER_ERROR', 'role is student or teacher');
     }
 
