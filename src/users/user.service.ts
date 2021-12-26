@@ -102,7 +102,8 @@ export class UsersService {
       student.studentClass.forEach((item) => {
         code.push(item.classes.code);
       });
-    } else if (role === 'teacher') {
+    } 
+     if (role === 'teacher') {
       const teacher = await this.teacherRepository.findOne({
         where: {
           user: user,
