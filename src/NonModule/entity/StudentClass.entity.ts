@@ -18,7 +18,7 @@ export class StudentClassEntity {
   @Column("text", { array: true ,default:[] })
   multiChoice: string[];
 
-  @Column("text", { array: true  ,default:[]})
+  @Column("text", { array: true  ,default:[1,1,1,1,1,1,1,1,1,1,1]})
   scoreProgress: string[];
 
   @Column({default:""})

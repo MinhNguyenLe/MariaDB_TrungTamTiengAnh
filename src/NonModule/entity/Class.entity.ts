@@ -25,8 +25,8 @@ export class ClassEntity {
   @Column({ default: '' })
   code: string;
 
-  @Column("int", { array: true  ,default:[1,1,1,1,1,1,1,1,1,1,1]})
-  session: number[];
+  @Column("text", { array: true  ,default:['1','1','1','1','1','1','1','1','1','1','1']})
+  session: string[];
 
   @OneToMany(
     () => NotificationClassEntity,

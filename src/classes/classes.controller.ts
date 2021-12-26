@@ -68,9 +68,9 @@ export class ClassesController {
 
   @Post('/add-progress-score')
   addProgressScore(@Body('content') content: {
-    email:string,score:number,session:string
+    id:number,score:string,session:string
   }) {
-    return this.classesService.addProgressScore(content.email,content.score,content.session);
+    return this.classesService.addProgressScore(content.id,content.score,content.session);
   }
 
   @Post('/edit')

@@ -52,34 +52,20 @@ export class ClassesService {
     private userRepository: Repository<UserEntity>,
   ) {}
 
-  async addProgressScore(email:string,score:number,session:string):Promise<classes> {
-    //err -> 1 student with email have many studentClass
-
-    const user = await this.userRepository.findOne({
-      where: {
-        email,
-      },
-    });
-    if (!user) customStatusCode('INTERNAL_SERVER_ERROR', 'email is incorrect');
-    const student = await this.studentRepository.findOne({
-      where: {
-        user,
-      }
-    });
-
+  async addProgressScore(id:number,score:string,session:string):Promise<classes> {
     const studentClass = await this.studentClassRepository.findOne(
-      {where:{student},relations:["classes","classes.studentClass"]}
+      {where:{id},relations:["classes","classes.studentClass"]}
      );
 
       const result = []
 
       for(const [index,item] of studentClass.scoreProgress.entries()){
-        if(index.toString() === session.toString()) result.push(score)
+        if((index+1).toString() === session.toString()) result.push(score)
         else result.push(item)
       }
 
     await this.studentClassRepository.update(
-          { student },
+          { id },
           {
             scoreProgress: result
           },

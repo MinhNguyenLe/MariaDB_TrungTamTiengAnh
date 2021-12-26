@@ -14,7 +14,7 @@ export interface classes {
   course: course;
   timetable: timeTable[];
   createdAt: Date;
-  session: number[];
+  session: string[];
 }
 
 export interface newClasses {
