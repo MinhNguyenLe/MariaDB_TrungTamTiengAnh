@@ -665,6 +665,7 @@ export class ClassesService {
     return this.classesRepository.find({
       relations: [
         'noti',
+        'noti.type',
         'studentClass',
         'teacherClass',
         'course',

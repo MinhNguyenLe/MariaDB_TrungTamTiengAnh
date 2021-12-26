@@ -42,13 +42,12 @@ export class NotisService {
 
   async create(content: newNotificationClass): Promise<classes> {
     const classes = await this.classesRepository.findOne({
-      id: content.idClass,
+      where:{id: content.idClass}
     });
 
     const typeNoti = await this.notiTypeRepository.findOne({
-      id: content.idType,
+      where:{id: content.idType}
     });
-
     if (content.role === 'student') {
       const student = await this.studentClassRepository.findOne({
         id: content.idUserClass,
@@ -60,7 +59,8 @@ export class NotisService {
         title: content.title,
         studentClass: student,
       });
-    } else {
+    } 
+    if (content.role === 'teacher') {
       const teacher = await this.teacherClassRepository.findOne({
         id: content.idUserClass,
       });
@@ -69,7 +69,7 @@ export class NotisService {
         classes: classes,
         content: content.content,
         title: content.title,
-        studentClass: teacher,
+        teacherClass: teacher,
       });
     }
 
