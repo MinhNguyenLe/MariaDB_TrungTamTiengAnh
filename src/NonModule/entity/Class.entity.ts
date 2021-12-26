@@ -12,6 +12,7 @@ import {
 import { TimeTableEntity } from './TimeTable.entity';
 import { StudentClassEntity } from './StudentClass.entity';
 import { TeacherClassEntity } from './TeacherClass.entity';
+import { LargeNumberLike } from 'crypto';
 
 @Entity('class')
 export class ClassEntity {
@@ -24,8 +25,8 @@ export class ClassEntity {
   @Column({ default: '' })
   code: string;
 
-  @Column({ default: 10 })
-  session: number;
+  @Column("text", { array: true  ,default:['1','1','1','1','1','1','1','1','1','1','1']})
+  session: string[];
 
   @OneToMany(
     () => NotificationClassEntity,

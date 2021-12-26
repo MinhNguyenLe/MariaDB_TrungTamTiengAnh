@@ -66,6 +66,13 @@ export class ClassesController {
     return this.classesService.getAllTeacherClass(code);
   }
 
+  @Post('/add-progress-score')
+  addProgressScore(@Body('content') content: {
+    id:number,score:string,session:string
+  }) {
+    return this.classesService.addProgressScore(content.id,content.score,content.session);
+  }
+
   @Post('/edit')
   edit(@Body('content') content: classesEdit) {
     return this.classesService.editClass(content);

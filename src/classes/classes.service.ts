@@ -52,6 +52,46 @@ export class ClassesService {
     private userRepository: Repository<UserEntity>,
   ) {}
 
+  async addProgressScore(id:number,score:string,session:string):Promise<classes> {
+    const studentClass = await this.studentClassRepository.findOne(
+      {where:{id},relations:["classes","classes.studentClass"]}
+     );
+
+      const result = []
+
+      for(const [index,item] of studentClass.scoreProgress.entries()){
+        if((index+1).toString() === session.toString()) result.push(score)
+        else result.push(item)
+      }
+
+    await this.studentClassRepository.update(
+          { id },
+          {
+            scoreProgress: result
+          },
+        );
+
+    return this.classesRepository.findOne({
+      where:{id:studentClass.classes.id},
+      relations: [
+        'noti',
+        'studentClass',
+        'teacherClass',
+        'course',
+        'timetable',
+        'timetable.classroom',
+        'studentClass.student',
+        'studentClass.student.schedule',
+        'studentClass.student.user',
+        'teacherClass.teacher.user',
+        'studentClass.student.schedule.timetable',
+        'teacherClass.teacher',
+        'teacherClass.teacher.schedule',
+        'teacherClass.teacher.schedule.timetable',
+      ],
+    });
+  }
+
   async createQuizzesScore(idSolution: number): Promise<classes> {
     const teacher = await this.teacherClassRepository.findOne(
      {where:{id:idSolution},relations:["classes","teacher","classes.studentClass"]}
