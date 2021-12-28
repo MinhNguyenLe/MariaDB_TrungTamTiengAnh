@@ -133,21 +133,28 @@ export class ClassesService {
   }
 
   async createQuizzesScore(idSolution: number): Promise<classes> {
+    
     const teacher = await this.teacherClassRepository.findOne(
      {where:{id:idSolution},relations:["classes","teacher","classes.studentClass"]}
     );
-
+    console.log("Duongdebug");
+    console.log(teacher);
+    console.log("Duongdebug");
     for (const item of teacher.classes.studentClass) {
+      
       const student = await this.studentClassRepository.findOne(
         {where:{id:item.id}}
        );
+       
        if(!student.quizzesScore){
+        
          let score = 0;
          [...teacher.multiChoice].forEach((item,index) =>{
           if(item === student["multiChoice"][index]) {
             score = score + 1
           }
         })
+        
         await this.studentClassRepository.update(
           { id:item.id },
           {

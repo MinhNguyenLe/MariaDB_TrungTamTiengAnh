@@ -68,14 +68,16 @@ export class ClassroomsService {
     const classes = await this.classRepository.findOne({
       where: { id: content.idClass },
     });
-
+    const timeTableSort = content.timetable[0];
     // verify new timetable
     for (const item of check(classroom.timetable, content.timetable)) {
+      console.log("duong");
+      console.log(timeTableSort.begin);
       await this.timetableRepository.save({
         classes: classes,
         classroom: classroom,
-        begin: item.begin,
-        end: item.end,
+        begin: timeTableSort.begin,
+        end: timeTableSort.end,
       });
     }
 
